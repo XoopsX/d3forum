@@ -21,6 +21,8 @@ if( ! include dirname(__FILE__).'/process_this_category.inc.php' ) redirect_head
 // get $post4assign
 include dirname(__FILE__).'/process_this_post.inc.php' ;
 
+$d3forum_meta_description = preg_replace('/[\r\n\t]/','',htmlspecialchars(mb_substr(strip_tags($post4assign['post_text']),0,120, _CHARSET),ENT_QUOTES)); // naao
+
 // posts loop
 $posts = array() ;
 $sql = "SELECT * FROM ".$db->prefix($mydirname."_posts")." WHERE topic_id=$topic_id ORDER BY order_in_tree,post_id" ; // TODO
@@ -97,6 +99,54 @@ foreach( $posts as $eachpost ) {
 // for notification...
 $_GET['topic_id'] = $topic_id ;
 
+	// naao from
+if( is_object( $xoopsUser ) ) {
+	if ($xoopsModuleConfig['use_name'] == 1 && $xoopsUser->getVar( 'name' ) ) {
+		$poster_uname4disp = $xoopsUser->getVar( 'name' ) ;
+	} else {
+		$poster_uname4disp = $xoopsUser->getVar( 'uname' ) ;
+	}
+
+} else { $poster_uname4disp = '' ;}
+
+$tree = array();
+$topics_count=0;
+if( $topic4assign['external_link_id'] >0 ) {
+
+	$sql = "SELECT p.*, t.topic_locked, t.topic_id, t.forum_id, t.topic_last_uid, t.topic_last_post_time
+		FROM ".$db->prefix($mydirname."_topics")." t
+		LEFT JOIN ".$db->prefix($mydirname."_posts")." p ON p.topic_id=t.topic_id
+		WHERE t.forum_id='".(int)$forum4assign['id']."' AND p.depth_in_tree='0'
+			AND (t.topic_external_link_id='".(int)$topic4assign['external_link_id']."'
+			OR t.topic_id=$topic_id )" ;
+
+	if( ! $prs = $db->query( $sql ) ) die( _MD_D3FORUM_ERR_SQL.__LINE__ ) ;
+	while( $post_row = $db->fetchArray( $prs ) ) {
+		// topics array
+		$topic_last_uid = intval( $post_row['topic_last_uid'] ) ;
+		$topic_last_post_time = intval( $post_row['topic_last_post_time'] ) ;
+		$topic_last_uname = XoopsUser::getUnameFromId( $topic_last_uid , $xoopsModuleConfig['use_name']) ; //naao usereal=1
+		$topic_last_uname = $topic_last_uid > 0 ? $topic_last_uname : $myts->makeTboxData4Show( $post_row['guest_name'] ) ;
+
+		$tree[] = array(
+			'id' => intval( $post_row['post_id'] ) ,
+			'subject' => $myts->makeTboxData4Show( $post_row['subject'] , $post_row['number_entity'] ,
+					 $post_row['special_entity'] ) ,
+			'post_time_formatted' => formatTimestamp( $post_row['post_time'] , 'm' ) ,
+			'poster_uid' => $topic_last_uid ,
+			'poster_uname' => $topic_last_uname ,
+			'icon' => intval( $post_row['icon'] ) ,
+			'depth_in_tree' => intval( $post_row['depth_in_tree'] ) ,
+			'order_in_tree' => intval( $post_row['order_in_tree'] ) ,
+			'topic_id' => intval( $post_row['topic_id'] ) ,
+			'ul_in' => '<ul><li>' ,
+			'ul_out' => '</li></ul>' ,
+		);
+	}
+		$topics_count = count($tree) ;
+}
+	// naao to
+
 $xoopsOption['template_main'] = $mydirname.'_main_viewpost.html' ;
 include XOOPS_ROOT_PATH.'/header.php' ;
 
@@ -110,10 +160,14 @@ $xoopsTpl->assign(
 		'prev_topic' => $prev_topic4assign ,
 		'post' => $post4assign ,
 		'posts' => $posts ,
+		'tree' => $tree ,	// naao
+		'tree_tp_count' => $topics_count ,	// naao
 		'page' => 'viewpost' ,
 		'ret_name' => 'post_id' ,
 		'ret_val' => $post_id ,
-		'xoops_pagetitle' => $post4assign['subject'] ,
+		'uname' => $poster_uname4disp ,
+		'xoops_pagetitle' => join(' - ', array($post4assign['subject'], $forum4assign['title'], $xoopsModule->getVar('name'))) ,
+		'xoops_meta_description' => $d3forum_meta_description ,	// naao
 		'xoops_breadcrumbs' => $xoops_breadcrumbs ,
 	)
 ) ;

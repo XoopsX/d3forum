@@ -29,4 +29,7 @@ if( is_object( $xoopsModule ) ) {
 	$xoops_breadcrumbs = array() ;
 }
 
+// init meta description //nao-pon
+$d3forum_meta_description = '';
+
 ?>

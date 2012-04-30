@@ -1,13 +1,18 @@
 <!-- start each post -->
-<div class="d3f_head">
+<div class="itemHead">
+
 <{if $post.poster_avatar}>
+<{if $post.poster_uid != 0}><a href="<{$xoops_url}>/userinfo.php?uid=<{$post.poster_uid}>" title="<{$post.poster_uname}>"><{/if}>
 	<{if $post.poster_avatar.height > 80}>
-		<img src="<{$xoops_upload_url}>/<{$post.poster_avatar.path}>" height="80" alt="" class="d3f_avatar" />
+		<img src="<{$xoops_upload_url}>/<{$post.poster_avatar.path}>" height="80" alt="<{$post.poster_uname}>" class="d3f_avatar" />
+	<{elseif $post.poster_avatar.width > 1}>
+		<img src="<{$xoops_upload_url}>/<{$post.poster_avatar.path}>" width="<{$post.poster_avatar.width}>" height="<{$post.poster_avatar.height}>" alt="<{$post.poster_uname}>" class="d3f_avatar" />
 	<{else}>
-		<img src="<{$xoops_upload_url}>/<{$post.poster_avatar.path}>" width="<{$post.poster_avatar.width}>" height="<{$post.poster_avatar.height}>" alt="" class="d3f_avatar" />
+		<img src="<{$xoops_url}>/modules/user/images/no_avatar.gif" alt="<{$post.poster_uname}>" class="d3f_avatar" />
 	<{/if}>
+<{if $post.poster_uid != 0}></a><{/if}>
 <{/if}>
-	<h2<{if $post.invisible || ! $post.approval }> class="<{if $post.invisible}> invisible<{elseif ! $post.approval}> yetapproval<{/if}>"<{/if}>>
+	<h2 class="<{if $post.invisible || ! $post.approval }><{if $post.invisible}> invisible<{elseif ! $post.approval}> yetapproval<{/if}><{/if}> itemTitle">
 	<a id="post_id<{$post.id}>" name="post_id<{$post.id}>"><img src="<{$mod_imageurl}>/posticon<{$post.icon}>.gif" alt="<{$icon_meanings[$post.icon]}>" /></a>
 	<{if $caller == 'listposts'}>
 		<a href="<{$mod_url}>/index.php?post_id=<{$post.id}>" id="post_path<{$post.unique_path}>" name="post_path<{$post.unique_path}>"><{$post.subject}></a>
@@ -43,7 +48,7 @@
 	<{else}>
 		<{$smarty.const._MD_D3FORUM_PARENTPOST}>
 	<{/if}> -
-	
+
 	<{if $post.first_child_id}>
 		<{foreach from=$post.f1s key="f1_id" item="f1_leaf_number" name="f1_loop"}>
 			<a href="<{$f1_id|string_format:$inner_link_format}>"><{if $smarty.foreach.f1_loop.first}><{$smarty.const._MD_D3FORUM_CHILDPOSTS}><{/if}><{$f1_leaf_number}></a>
@@ -51,12 +56,12 @@
 	<{else}>
 		<{$smarty.const._MD_D3FORUM_NOCHILDPOSTS}>
 	<{/if}> |
-	
+
 	<{$smarty.const._MD_D3FORUM_ON}> <{$post.post_time_formatted}> <{if $post.post_time < $post.modified_time}> | <span title="<{$post.modified_time_formatted}>"><{$smarty.const._MD_D3FORUM_LASTMODIFIED}><{if $xoops_isadmin}><a href="<{$mod_url}>/admin/index.php?page=post_histories&amp;post_id=<{$post.id}>"}>(<{$smarty.const._MD_D3FORUM_HISTORIES}>)</a><{/if}></span><{/if}>
 	</div>
 </div>
 <!-- poster info -->
-<div class="d3f_info_sub">
+<div class="itemInfo" style="text-align:left;">
 <{if $post.poster_uid != 0}><a href="<{$xoops_url}>/userinfo.php?uid=<{$post.poster_uid}>"><{/if}><{$post.poster_uname}><{if $post.poster_uid != 0}></a><{/if}>&nbsp;
 <{if $post.poster_uid != 0}>
 	<{if $post.poster_rank_title}>
@@ -69,7 +74,7 @@
 <{else}>
 	<{if $post.guest_url || $post.guest_trip}>
 	<{* <{$post.guest_email}> *}>
-	<{* <{if $post.guest_url}><a href="<{$post.guest_url}>" title="<{$post.guest_url}>"><{$smarty.const._MD_D3FORUM_TH_GUESTURL}></a><{/if}> *}>
+	<{if $post.guest_url}><a href="<{$post.guest_url}>" title="<{$post.guest_url}>"><{$smarty.const._MD_D3FORUM_TH_GUESTURL}></a><{/if}>
 	<{if $post.guest_trip}><{$smarty.const._MD_D3FORUM_TH_GUESTTRIP}>: <{$post.guest_trip}><{/if}>
 	<{/if}>
 <{/if}>
@@ -83,7 +88,7 @@
 </div>
 
 <!-- post foot control -->
-<div class="d3f_info_ctrl">
+<div class="itemFoot">
 <{if $forum.isadminormod}>
 	<a href="<{$mod_url}>/index.php?page=cutpasteposts&amp;post_id=<{$post.id}>" class="cutpaste"><img src="<{$mod_imageurl}>/adminicon_cutpaste.gif" alt="<{$smarty.const._MD_D3FORUM_CUTPASTEPOSTS}>" /></a> |
 <{/if}>

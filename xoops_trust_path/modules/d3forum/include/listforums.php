@@ -49,7 +49,8 @@ while( $cat_row = $db->fetchArray( $crs ) ) {
 
 // forums loop
 $forums = array() ;
-$sql = "SELECT f.*, p.topic_id, p.post_time, p.subject, p.icon, p.uid FROM ".$db->prefix($mydirname."_forums")." f LEFT JOIN ".$db->prefix($mydirname."_posts")." p ON p.post_id=f.forum_last_post_id WHERE ($whr_read4forum) AND cat_id=$cat_id ORDER BY f.forum_weight, f.forum_id" ;
+	// naao
+$sql = "SELECT f.*, p.topic_id, p.post_time, p.subject, p.icon, p.uid, p.guest_name FROM ".$db->prefix($mydirname."_forums")." f LEFT JOIN ".$db->prefix($mydirname."_posts")." p ON p.post_id=f.forum_last_post_id WHERE ($whr_read4forum) AND cat_id=$cat_id ORDER BY f.forum_weight, f.forum_id" ;
 if( ! $frs = $db->query( $sql ) ) die( _MD_D3FORUM_ERR_SQL.__LINE__ ) ;
 while( $forum_row = $db->fetchArray( $frs ) ) {
 
@@ -66,10 +67,18 @@ while( $forum_row = $db->fetchArray( $frs ) ) {
 	$user_handler =& xoops_gethandler( 'user' ) ;
 	$last_poster_obj =& $user_handler->get( intval( $forum_row['uid'] ) ) ;
 	if( is_object( $last_poster_obj ) ) {
-		$last_post_uname = $last_poster_obj->getVar( 'uname' ) ;
+		// naao from
+		//$last_post_uname = $last_poster_obj->getVar( 'uname' ) ;
+		if ($xoopsModuleConfig['use_name'] == 1 && $last_poster_obj->getVar( 'name' ) ) {
+			$last_post_uname = $last_poster_obj->getVar( 'name' ) ;
+		} else {
+			$last_post_uname = $last_poster_obj->getVar( 'uname' ) ;
+		}
+		// naao to
 	} else {
 		$last_post_uname = $xoopsConfig['anonymous'] ;
 	}
+
 
 	// forums array
 	$forums[] = array(
@@ -86,7 +95,8 @@ while( $forum_row = $db->fetchArray( $frs ) ) {
 		'last_post_icon' => intval( $forum_row['icon'] ) ,
 		'last_post_subject' => $myts->makeTboxData4Show( $forum_row['subject'] ) ,
 		'last_post_uid' => intval( $forum_row['uid'] ) ,
-		'last_post_uname' => $last_post_uname ,
+		'last_post_uname' => htmlspecialchars($last_post_uname) ,
+		'last_post_gname' => htmlspecialchars($forum_row['guest_name']) ,
 		'moderate_groups' => d3forum_get_forum_moderate_groups4show( $mydirname , $forum_row['forum_id'] ) ,
 		'moderate_users' => d3forum_get_forum_moderate_users4show( $mydirname , $forum_row['forum_id'] ) ,
 		'can_post' => (boolean)$forum_permissions[ $forum_row['forum_id'] ]['can_post'] ,
@@ -111,7 +121,7 @@ $xoopsTpl->assign(
 		'subcategories' => $subcategories ,
 		'category' => $category4assign ,
 		'page' => 'listforums' ,
-		'xoops_pagetitle' => $category4assign['title'] ,
+		'xoops_pagetitle' => join(' - ', array($category4assign['title'], $xoopsModule->getVar('name'))) ,
 		'xoops_breadcrumbs' => $xoops_breadcrumbs ,
 	)
 ) ;

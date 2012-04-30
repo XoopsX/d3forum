@@ -13,7 +13,19 @@
 <{strip}>
 <tr class="<{cycle values="even,odd"}>">
 	<td><a href="<{$block.mod_url}>/index.php?forum_id=<{$topic.forum_id}>"><{$topic.forum_title}></a></td>
-	<td><a href="<{$block.mod_url}>/index.php?topic_id=<{$topic.id}>#post_id<{$topic.last_post_id}>">
+	<td>
+    <{* <{if $topic.forum_id == 1}>
+        <a href="<{$xoops_url}>/modules/d3diary/detail.php?bid=<{$topic.external_link_id}>#post_id<{$topic.last_post_id}>">
+    <{elseif $topic.forum_id == 3}>
+        <a href="<{$xoops_url}>/modules/xpwiki/index.php?pgid=<{$topic.external_link_id}>#post_id<{$topic.last_post_id}>">
+    <{elseif $topic.forum_id == 8}>
+        <a href="<{$xoops_url}>/modules/pico/index.php?content_id=<{$topic.external_link_id}>#post_id<{$topic.last_post_id}>">
+    <{elseif $topic.forum_id == 10}>
+        <a href="<{$xoops_url}>/modules/bulletin/index.php?page=article&storyid=<{$topic.external_link_id}>#post_id<{$topic.last_post_id}>">
+    <{else}> *}>
+        <a href="<{$block.mod_url}>/index.php?topic_id=<{$topic.id}>#post_id<{$topic.last_post_id}>">
+    <{* <{/if}> *}>
+
 	<{if $topic.u2t_marked}><img src="<{$block.mod_imageurl}>/block_marked.gif" alt="<{$block.lang_alt_marked}>" /><{/if}>
 	<{* displays the last post's subject or topic title *}>
 	<{if $block.disp_last_subject }>
@@ -24,7 +36,13 @@
 	<{if ! $topic.solved}><img src="<{$block.mod_imageurl}>/block_unsolved.gif" alt="<{$block.lang_alt_unsolved}>" /><{/if}></td>
 	<td align="center"><{$topic.replies}></td>
 	<td align="center"><{$topic.views}></td>
-	<td align="center" nowrap="nowrap"><{$topic.last_uname}></td>
+	<td align="center" nowrap="nowrap">
+	<{if $topic.guest_name}>
+		<{$topic.guest_name}>
+	<{else}>
+		<{$topic.last_uname}>
+	<{/if}>
+</td>
 	<td align="right" nowrap="nowrap"><{$topic.last_post_time_formatted}></td>
 </tr>
 <{/strip}>
@@ -52,9 +70,26 @@
 
 <ol style="padding:3px;margin:0;">
 <{foreach item=topic from=$block.topics}>
-	<li><a href="<{$block.mod_url}>/index.php?topic_id=<{$topic.id}>"><{$topic.title}></a>(<{$topic.replies}>) <{$topic.last_uname}> <{$topic.last_post_time_formatted}></li>
+	<li>
+    <{* <{if $topic.forum_id == 1}>
+        <a href="<{$xoops_url}>/modules/d3diary/detail.php?bid=<{$topic.external_link_id}>#post_id<{$topic.last_post_id}>">
+    <{elseif $topic.forum_id == 3}>
+        <a href="<{$xoops_url}>/modules/xpwiki/index.php?pgid=<{$topic.external_link_id}>#post_id<{$topic.last_post_id}>">
+    <{elseif $topic.forum_id == 8}>
+        <a href="<{$xoops_url}>/modules/pico/index.php?content_id=<{$topic.external_link_id}>#post_id<{$topic.last_post_id}>">
+    <{elseif $topic.forum_id == 10}>
+        <a href="<{$xoops_url}>/modules/bulletin/index.php?page=article&storyid=<{$topic.external_link_id}>#post_id<{$topic.last_post_id}>">
+    <{else}> *}>
+        <a href="<{$block.mod_url}>/index.php?topic_id=<{$topic.id}>#post_id<{$topic.last_post_id}>">
+    <{* <{/if}> *}>
+    <{$topic.title}></a>(<{$topic.replies}>) 
+	<{if $topic.guest_name}>
+		<{$topic.guest_name}>
+	<{else}>
+		<{$topic.last_uname}>
+	<{/if}>
+ <{$topic.last_post_time_formatted}></li>
 <{/foreach}>
 </ol>
 
 <{/if}>
-

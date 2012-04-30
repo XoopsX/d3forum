@@ -156,11 +156,11 @@ function &d3forum_common_get_antispam_object( $mod_config )
 	if( file_exists( dirname(dirname(__FILE__)).'/class/'.$class_name.'.class.php' ) ) {
 		require_once dirname(dirname(__FILE__)).'/class/'.$class_name.'.class.php' ;
 		if( class_exists( $class_name ) ) {
-			$antispam_obj =& new $class_name() ;
+			$antispam_obj = new $class_name() ;
 		}
 	}
 	if( ! is_object( $antispam_obj ) ) {
-		$antispam_obj =& new D3forumAntispamDefault() ;
+		$antispam_obj = new D3forumAntispamDefault() ;
 	}
 	
 	return $antispam_obj ;

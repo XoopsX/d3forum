@@ -35,6 +35,10 @@ define($constpref.'_TOP_MESSAGEDEFAULT','<h1 class="d3f_title">Forum Top</h1><p 
 define($constpref.'_SHOW_BREADCRUMBS','Display breadcrumbs');
 define($constpref.'_DEFAULT_OPTIONS','Default checked in post form');
 define($constpref.'_DEFAULT_OPTIONSDSC','List checked options separated by comma(,).<br />eg) smiley,xcode,br,number_entity<br />You can add these options: special_entity html attachsig u2t_marked');
+define($constpref."_USENAME","display name");
+define($constpref."_USENAMEDESC","which name to use display name 'uname'(user ID) or 'name'(Real name). <br /> xoops default is 'uname'(user ID)");
+define($constpref."_USENAME_UNAME","use'uname'(user ID)");
+define($constpref."_USENAME_NAME","use'name'(Real name)");
 define($constpref.'_ALLOW_HTML','Allow HTML');
 define($constpref.'_ALLOW_HTMLDSC','Don\'t turn this on casually. It cause Script Insertion vulnerability if malicious user can post.');
 define($constpref.'_ALLOW_TEXTIMG','Allow to dipslay external images in the post');
@@ -85,8 +89,8 @@ define($constpref.'_NOTCAT_FORUM', 'This forum');
 define($constpref.'_NOTCAT_FORUMDSC', 'Notifications about the targetted forum');
 define($constpref.'_NOTCAT_CAT', 'This category');
 define($constpref.'_NOTCAT_CATDSC', 'Notifications about the targetted category');
-define($constpref.'_NOTCAT_GLOBAL', 'This module');
-define($constpref.'_NOTCAT_GLOBALDSC', 'Notifications about whole of the module');
+define($constpref.'_NOTCAT_GLOBAL', 'All categories');
+define($constpref.'_NOTCAT_GLOBALDSC', 'Notifications about all categories');
 
 // Each Notifications
 define($constpref.'_NOTIFY_TOPIC_NEWPOST', 'New post in the topic');
@@ -113,16 +117,16 @@ define($constpref.'_NOTIFY_CAT_NEWFORUM', 'New forum in the category');
 define($constpref.'_NOTIFY_CAT_NEWFORUMCAP', 'Notify me of new forums in the current category.');
 define($constpref.'_NOTIFY_CAT_NEWFORUMSBJ', '[{X_SITENAME}] {X_MODULE}:{CAT_TITLE} New forum in category');
 
-define($constpref.'_NOTIFY_GLOBAL_NEWPOST', 'New post in the module');
-define($constpref.'_NOTIFY_GLOBAL_NEWPOSTCAP', 'Notify me of new posts in the module.');
+define($constpref.'_NOTIFY_GLOBAL_NEWPOST', 'New post into any category');
+define($constpref.'_NOTIFY_GLOBAL_NEWPOSTCAP', 'Notify me of new posts into any category.');
 define($constpref.'_NOTIFY_GLOBAL_NEWPOSTSBJ', '[{X_SITENAME}] {X_MODULE}: New post {POST_TITLE}');
 
-define($constpref.'_NOTIFY_GLOBAL_NEWTOPIC', 'New topic in the module');
-define($constpref.'_NOTIFY_GLOBAL_NEWTOPICCAP', 'Notify me of new topics in the module.');
+define($constpref.'_NOTIFY_GLOBAL_NEWTOPIC', 'New topic into any category');
+define($constpref.'_NOTIFY_GLOBAL_NEWTOPICCAP', 'Notify me of new topics into any category.');
 define($constpref.'_NOTIFY_GLOBAL_NEWTOPICSBJ', '[{X_SITENAME}] {X_MODULE}: New topic {TOPIC_TITLE}');
 
-define($constpref.'_NOTIFY_GLOBAL_NEWFORUM', 'New forum in the module');
-define($constpref.'_NOTIFY_GLOBAL_NEWFORUMCAP', 'Notify me of new forums in the module.');
+define($constpref.'_NOTIFY_GLOBAL_NEWFORUM', 'New forum into any category');
+define($constpref.'_NOTIFY_GLOBAL_NEWFORUMCAP', 'Notify me of new forums into any category.');
 define($constpref.'_NOTIFY_GLOBAL_NEWFORUMSBJ', '[{X_SITENAME}] {X_MODULE}: New forum');
 
 define($constpref.'_NOTIFY_GLOBAL_NEWPOSTFULL', 'New Post (Full Text)');

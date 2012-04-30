@@ -10,7 +10,7 @@
 </div>
 <{/if}>
 
-<h1 class="d3f_title"><{$forum.title}></h1>
+<h1 class="d3f_title" ><{$forum.title}></h1>
 
 <p class="d3f_welcome">
 	<{$forum.desc}>
@@ -49,7 +49,7 @@
 	<li><a href="<{$mod_url}>/index.php?page=rss&amp;forum_id=<{$forum.id}>&amp;odr=1"><{$smarty.const._MD_D3FORUM_LINK_FORUMRSS}> <img src="<{$mod_imageurl}>/icon_rss.gif" alt="RSS" width="16" height="16" /></a></li>
 </ul>
 
-<h2 class="d3f_head"><{$forum.title}></h2>
+<h2 class="head"><{$forum.title}></h2>
 
 <{include file="db:`$mydirname`_inc_d3comment_summary.html" topic=$d3comment_info}>
 
@@ -116,7 +116,7 @@
 	<{if $mod_config.allow_mark && $uid && $topic.u2t_marked}>
 		<a href="<{$mod_url}>/index.php?page=update_u2t_marked&amp;topic_id=<{$topic.id}>&amp;ret_name=forum_id&amp;ret_val=<{$forum.id}>" title="<{$smarty.const._MD_D3FORUM_MARK_TURNOFF}>"><img src="<{$mod_imageurl}>/topic_status_marked1.gif" alt="<{$smarty.const._MD_D3FORUM_ALT_MARKEDYES}>" /></a>
 	<{/if}>
-	<a href="<{$mod_url}>/index.php?topic_id=<{$topic.id}>"><{$topic.title}></a><{$topic.topic_page_jump}></td>
+	<a href="<{$mod_url}>/index.php?topic_id=<{$topic.id}>#post_id<{$topic.last_post_id}>"><{$topic.title}></a><{$topic.topic_page_jump}></td>
 	<td><{$topic.replies}></td>
 	<td><{$topic.views}></td>
 	<{if $mod_config.use_vote}>
@@ -124,9 +124,19 @@
 	<td><{$topic.votes_avg|string_format:"%.2f"}></td>
 	<{/if}>
 	<td class="d3f_posters"><{$topic.first_post_time_formatted}><br />
-	<{$topic.first_post_uname}> <a href="<{$mod_url}>/index.php?post_id=<{$topic.first_post_id}>"><img src="<{$mod_imageurl}>/posticon<{$topic.first_post_icon}>.gif" alt="<{$topic.first_post_subject}>" /></a></td>
+	<{if $topic.first_post_gname}>
+		<{$topic.first_post_gname}>
+	<{else}>
+		<{$topic.first_post_uname}>
+	<{/if}>
+ <a href="<{$mod_url}>/index.php?post_id=<{$topic.first_post_id}>"><img src="<{$mod_imageurl}>/posticon<{$topic.first_post_icon}>.gif" alt="<{$topic.first_post_subject}>" /></a></td>
 	<td class="d3f_posters"><{if $topic.replies>0}><{$topic.last_post_time_formatted}><br />
-	<{$topic.last_post_uname}> <a href="<{$mod_url}>/index.php?post_id=<{$topic.last_post_id}>"><img src="<{$mod_imageurl}>/posticon<{$topic.last_post_icon}>.gif" alt="<{$topic.last_post_subject}>" /></a><{/if}></td>
+	<{if $topic.last_post_gname}>
+		<{$topic.last_post_gname}>
+	<{else}>
+		<{$topic.last_post_uname}>
+	<{/if}>
+ <a href="<{$mod_url}>/index.php?post_id=<{$topic.last_post_id}>"><img src="<{$mod_imageurl}>/posticon<{$topic.last_post_icon}>.gif" alt="<{$topic.last_post_subject}>" /></a><{/if}></td>
 </tr>
 <{/foreach}>
 <!-- end forum topic -->
@@ -164,4 +174,3 @@
 
 <{include file='db:system_notification_select.html'}>
 <!-- end module contents -->
-

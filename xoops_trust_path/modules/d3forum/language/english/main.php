@@ -102,6 +102,7 @@ define('_MD_D3FORUM_COMMENTSLIST','Comments list');
 define('_MD_D3FORUM_COM_TARGETMODULE','Target');
 define('_MD_D3FORUM_COM_SUBJECT','Subject');
 define('_MD_D3FORUM_COM_SUMMARY','Summary');
+define('_MD_D3FORUM_THIS_TOPIC','# THIS TOPIC');
 
 // topic,forum,category controller
 define('_MD_D3FORUM_SHORTCUT','Short cut');

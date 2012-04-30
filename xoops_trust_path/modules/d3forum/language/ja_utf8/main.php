@@ -102,6 +102,7 @@ define('_MD_D3FORUM_COMMENTSLIST','コメント一覧');
 define('_MD_D3FORUM_COM_TARGETMODULE','対象モジュール');
 define('_MD_D3FORUM_COM_SUBJECT','件名');
 define('_MD_D3FORUM_COM_SUMMARY','要旨');
+define('_MD_D3FORUM_THIS_TOPIC','★表示中トピック');
 
 // topic,forum,category controller
 define('_MD_D3FORUM_SHORTCUT','ショートカット');

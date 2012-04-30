@@ -15,7 +15,7 @@
 
 <table class="outer search d3f_form_table">
 	<tr>
-		<th class="d3f_head"><label for="keywords"><{$smarty.const._MD_D3FORUM_LABEL_KEYWORDS}></label></th>
+		<td class="head"><label for="keywords"><{$smarty.const._MD_D3FORUM_LABEL_KEYWORDS}></label></th>
 		<td class="even">
 			<input type="text" name="keyword" id="keywords" size="48" value="<{$keyword}>" />
 			<fieldset>
@@ -31,7 +31,7 @@
 		</td>
 	</tr>
 	<tr>
-		<th class="d3f_head"><{$smarty.const._MD_D3FORUM_FORUM}></th>
+		<td class="head"><{$smarty.const._MD_D3FORUM_FORUM}></th>
 		<td class="even">
 			<select name="forum_id">
 				<option value="">-<{$smarty.const._MD_D3FORUM_WHOLE}>-</option>
@@ -40,11 +40,11 @@
 		</td>
 	</tr>
 	<tr>
-		<th class="d3f_head"><label for="searchin_poster"><{$smarty.const._MD_D3FORUM_POSTER}></label></th>
+		<td class="head"><label for="searchin_poster"><{$smarty.const._MD_D3FORUM_POSTER}></label></th>
 		<td class="even"><input type="text" name="search_username" id="searchin_poster" value="<{$uname}>" /></td>
 	</tr>
 	<tr>
-		<th class="d3f_head"><{$smarty.const._MD_D3FORUM_LABEL_SORTBY}></th>
+		<td class="head"><{$smarty.const._MD_D3FORUM_LABEL_SORTBY}></th>
 		<td class="even"><{html_radios name="sortby" options=$sortby_options selected=$sortby_selected}></td>
 	</tr>
 </table>
@@ -55,7 +55,7 @@
 
 <{if $show_results}>
 
-<h2 class="d3f_head"><{$smarty.const._MD_D3FORUM_TITLE_SEARCHRESULTS}></h2>
+<h2 class="itemHead"><{$smarty.const._MD_D3FORUM_TITLE_SEARCHRESULTS}></h2>
 
 <{if $results}>
 
@@ -64,11 +64,11 @@
 <table class="outer searchresult d3f_table">
 <thead>
 <tr>
-	<th abbr="<{$smarty.const._MD_D3FORUM_FORUM}>"><{$smarty.const._MD_D3FORUM_FORUM}></th>
-	<th abbr="<{$smarty.const._MD_D3FORUM_SUBJECT}>"><{$smarty.const._MD_D3FORUM_SUBJECT}></th>
-	<th abbr="<{$smarty.const._MD_D3FORUM_POSTER}>"><{$smarty.const._MD_D3FORUM_POSTER}></th>
-	<th abbr="<{$smarty.const._MD_D3FORUM_VIEWS}>"><{if $mod_config.use_vote}><{$smarty.const._MD_D3FORUM_VOTEPOINTAVG}><{else}><{$smarty.const._MD_D3FORUM_VIEWS}><{/if}></th>
-	<th abbr="<{$smarty.const._MD_D3FORUM_ON}>"><{$smarty.const._MD_D3FORUM_ON}></th>
+	<td class="head" abbr="<{$smarty.const._MD_D3FORUM_FORUM}>"><{$smarty.const._MD_D3FORUM_FORUM}></th>
+	<td class="head" abbr="<{$smarty.const._MD_D3FORUM_SUBJECT}>"><{$smarty.const._MD_D3FORUM_SUBJECT}></th>
+	<td class="head" abbr="<{$smarty.const._MD_D3FORUM_POSTER}>"><{$smarty.const._MD_D3FORUM_POSTER}></th>
+	<td class="head" abbr="<{$smarty.const._MD_D3FORUM_VIEWS}>"><{if $mod_config.use_vote}><{$smarty.const._MD_D3FORUM_VOTEPOINTAVG}><{else}><{$smarty.const._MD_D3FORUM_VIEWS}><{/if}></th>
+	<td class="head" abbr="<{$smarty.const._MD_D3FORUM_ON}>"><{$smarty.const._MD_D3FORUM_ON}></th>
 </tr>
 </thead>
 <!-- start search results -->

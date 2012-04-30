@@ -9,7 +9,7 @@
 </div>
 <{/if}>
 
-<h1 class="d3f_title"><{$pagetitle}></h1>
+<h1 class="itemHead"><{$pagetitle}></h1>
 
 <div class="d3f_bbsviewctrl">
 	<form action="<{$mod_url}>/index.php" method="get">
@@ -73,7 +73,7 @@
 	<{if $uid && $topic.u2t_marked}>
 		<a href="<{$mod_url}>/index.php?page=update_u2t_marked&amp;topic_id=<{$topic.id}>&amp;ret_name=cat_ids&amp;ret_val=<{$cat_ids}>" title="<{$smarty.const._MD_D3FORUM_MARK_TURNOFF}>"><img src="<{$mod_imageurl}>/topic_status_marked1.gif" alt="<{$smarty.const._MD_D3FORUM_ALT_MARKEDYES}>" /></a>
 	<{/if}>
-	<a href="<{$mod_url}>/index.php?topic_id=<{$topic.id}>"><{$topic.title}></a><{$topic.topic_page_jump}>
+	<a href="<{$mod_url}>/index.php?topic_id=<{$topic.id}>#post_id<{$topic.last_post_id}>"><{$topic.title}></a><{$topic.topic_page_jump}>
 	<br />
 	<{if $topic.votes_count > 0}>
 		<{$smarty.const._MD_D3FORUM_VOTECOUNT}>:<{$topic.votes_count}> &nbsp;
@@ -84,15 +84,24 @@
 	<td><{$topic.replies}></td>
 	<td><{$topic.views}></td>
 	<td class="d3f_posters"><{$topic.first_post_time_formatted}><br />
-	<{$topic.first_post_uname}> <a href="<{$mod_url}>/index.php?post_id=<{$topic.first_post_id}>"><img src="<{$mod_imageurl}>/posticon<{$topic.first_post_icon}>.gif" alt="<{$topic.first_post_subject}>" /></a></td>
+	<{if $topic.first_post_gname}>
+		<{$topic.first_post_gname}>
+	<{else}>
+		<{$topic.first_post_uname}>
+	<{/if}>	
+ <a href="<{$mod_url}>/index.php?post_id=<{$topic.first_post_id}>"><img src="<{$mod_imageurl}>/posticon<{$topic.first_post_icon}>.gif" alt="<{$topic.first_post_subject}>" /></a></td>
 	<td class="d3f_posters"><{if $topic.replies>0}><{$topic.last_post_time_formatted}><br />
-	<{$topic.last_post_uname}> <a href="<{$mod_url}>/index.php?post_id=<{$topic.last_post_id}>"><img src="<{$mod_imageurl}>/posticon<{$topic.last_post_icon}>.gif" alt="<{$topic.last_post_subject}>" /></a><{/if}></td>
+	<{if $topic.last_post_gname}>
+		<{$topic.last_post_gname}>
+	<{else}>
+		<{$topic.last_post_uname}>
+	<{/if}>	
+ <a href="<{$mod_url}>/index.php?post_id=<{$topic.last_post_id}>"><img src="<{$mod_imageurl}>/posticon<{$topic.last_post_icon}>.gif" alt="<{$topic.last_post_subject}>" /></a><{/if}></td>
 <{/strip}>
 </tr>
 <{/foreach}>
 <!-- end forum topic -->
 </table>
-</form>
 <!-- end forum main table -->
 
 <{if $pagenav}><div class="d3f_pagenav"><{$pagenav}></div><{/if}>
