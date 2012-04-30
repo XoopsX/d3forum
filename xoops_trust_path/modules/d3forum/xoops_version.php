@@ -11,14 +11,15 @@ $constpref = '_MI_' . strtoupper( $mydirname ) ;
 
 $modversion['name'] = constant($constpref.'_NAME') ;
 $modversion['description'] = constant($constpref.'_DESC') ;
-$modversion['version'] = 0.85 ;
+$modversion['version'] = 0.86 ;
 $modversion['credits'] = "PEAK Corp. and JIDAIKOBO";
-$modversion['author'] = "GIJ=CHECKMATE and JIDAIKOBO" ;
+$modversion['author'] = "GIJ=CHECKMATE and JIDAIKOBO and hackd naao, nao-pon, domifara" ;
 $modversion['help'] = "" ;
 $modversion['license'] = "GPL" ;
 $modversion['official'] = 0 ;
 $modversion['image'] = file_exists( $mydirpath.'/module_icon.png' ) ? 'module_icon.png' : 'module_icon.php' ;
 $modversion['dirname'] = $mydirname ;
+$modversion['trust_dirname'] = $mytrustdirname ;
 
 // Any tables can't be touched by modulesadmin.
 $modversion['sqlfile'] = false ;
@@ -43,6 +44,15 @@ $modversion['sub'] = array() ;
 if( is_object( @$GLOBALS['xoopsModule'] ) && $GLOBALS['xoopsModule']->getVar('dirname') == $mydirname ) {
 	require_once dirname(__FILE__).'/include/common_functions.php' ;
 	$modversion['sub'] = d3forum_get_submenu( $mydirname ) ;
+} else {
+	$_sub_menu_cache = XOOPS_TRUST_PATH . '/cache/'. urlencode(substr(XOOPS_URL, 7)) . '_' . $mydirname . '_' . (is_object(@$GLOBALS['xoopsUser'])? join('-', $GLOBALS['xoopsUser']->getGroups()):XOOPS_GROUP_ANONYMOUS)  . '_' . $GLOBALS['xoopsConfig']['language'] . '.submenu';
+	if (is_file($_sub_menu_cache) && time() - 3600 < filemtime($_sub_menu_cache)) {
+		$modversion['sub'] = unserialize(file_get_contents($_sub_menu_cache));
+	} else {
+		require_once dirname(__FILE__).'/include/common_functions.php' ;
+		$modversion['sub'] = d3forum_get_submenu( $mydirname ) ;
+		file_put_contents($_sub_menu_cache, serialize($modversion['sub']));
+	}
 }
 
 // All Templates can't be touched by modulesadmin.
@@ -57,7 +67,6 @@ $modversion['blocks'][1] = array(
 	'edit_func'		=> 'b_d3forum_list_topics_edit' ,
 	'options'		=> "$mydirname|10|1|time|1|0||" ,
 	'template'		=> '' , // use "module" template instead
-	'visible_any'	=> true ,
 	'can_clone'		=> true ,
 ) ;
 
@@ -69,7 +78,6 @@ $modversion['blocks'][2] = array(
 	'edit_func'		=> 'b_d3forum_list_posts_edit' ,
 	'options'		=> "$mydirname|10|time|0||" ,
 	'template'		=> '' , // use "module" template instead
-	'visible_any'	=> true ,
 	'can_clone'		=> true ,
 ) ;
 
@@ -81,7 +89,6 @@ $modversion['blocks'][3] = array(
 	'edit_func'		=> 'b_d3forum_list_forums_edit' ,
 	'options'		=> "$mydirname|0|" ,
 	'template'		=> '' , // use "module" template instead
-	'visible_any'	=> true ,
 	'can_clone'		=> true ,
 ) ;
 
@@ -118,6 +125,16 @@ $modversion['config'][] = array(
 	'default'		=> 'smiley,xcode,br,number_entity' ,
 	'options'		=> array()
 ) ;
+
+$modversion['config'][] = array(
+	'name'			=> 'use_name' ,
+	'title'			=> $constpref.'_USENAME' ,
+	'description'		=> $constpref.'_USENAMEDESC' ,
+	'formtype'		=> 'select',
+	'valuetype'		=> 'int',
+	'default'		=> '0',
+	'options'		=> array( $constpref.'_USENAME_UNAME' => 0, $constpref.'_USENAME_NAME' => 1)
+);
 
 $modversion['config'][] = array(
 	'name'			=> 'allow_html' ,
@@ -335,7 +352,7 @@ $modversion['config'][] = array(
 	'description'	=> $constpref.'_ANTISPAM_CLASSDSC' ,
 	'formtype'		=> 'textbox' ,
 	'valuetype'		=> 'text' ,
-	'default'		=> 'default' ,
+	'default'		=> 'defaultmobilesmart' ,
 	'options'		=> array()
 ) ;
 

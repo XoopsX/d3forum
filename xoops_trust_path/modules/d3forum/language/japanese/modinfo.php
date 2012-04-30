@@ -35,6 +35,10 @@ define($constpref.'_TOP_MESSAGEDEFAULT','<h1 class="d3f_title">フォーラムトップ<
 define($constpref.'_SHOW_BREADCRUMBS','パンくずを表示する');
 define($constpref.'_DEFAULT_OPTIONS','投稿オプションのデフォルト値');
 define($constpref.'_DEFAULT_OPTIONSDSC','新規トピックや返信の初期状態で有効となっているオプションをカンマ(,)で区切って入力します。<br />インストール直後は smiley,xcode,br,number_entity となっています。<br />その他、 special_entity html attachsig u2t_marked 等が指定可能です');
+define($constpref."_USENAME","ユーザー名表示");
+define($constpref."_USENAMEDESC","ユーザー名表示に「uname」(ユーザーID)「name」（本名）どちらを使用するかを設定します。<br />xoopsデフォルトは「uname」(ユーザーID)");
+define($constpref."_USENAME_UNAME","「uname」(ユーザーID)を使用");
+define($constpref."_USENAME_NAME","「name」（本名）を使用");
 define($constpref.'_ALLOW_HTML','投稿本文内のHTMLを許可する');
 define($constpref.'_ALLOW_HTMLDSC','投稿本文のHTML特殊文字を許可します。不特定多数に許可すると、Script Insertion 脆弱性につながります');
 define($constpref.'_ALLOW_TEXTIMG','投稿本文内の外部画像を許可する');
@@ -85,8 +89,8 @@ define($constpref.'_NOTCAT_FORUM', '表示中のフォーラム');
 define($constpref.'_NOTCAT_FORUMDSC', '表示中のフォーラムに対する通知オプション');
 define($constpref.'_NOTCAT_CAT', '表示中のカテゴリ');
 define($constpref.'_NOTCAT_CATDSC', '表示中のカテゴリに対する通知オプション');
-define($constpref.'_NOTCAT_GLOBAL', 'モジュール全体');
-define($constpref.'_NOTCAT_GLOBALDSC', 'フォーラムモジュール全体における通知オプション');
+define($constpref.'_NOTCAT_GLOBAL', '全カテゴリー');
+define($constpref.'_NOTCAT_GLOBALDSC', '全カテゴリー共通の通知オプション');
 
 // Each Notifications
 define($constpref.'_NOTIFY_TOPIC_NEWPOST', 'トピック内投稿');
@@ -114,19 +118,19 @@ define($constpref.'_NOTIFY_CAT_NEWFORUMCAP', 'このカテゴリにおいて新フォーラムが
 define($constpref.'_NOTIFY_CAT_NEWFORUMSBJ', '[{X_SITENAME}] {X_MODULE}:{CAT_TITLE} カテゴリ内新フォーラム {FORUM_TITLE}');
 
 define($constpref.'_NOTIFY_GLOBAL_NEWPOST', '新投稿全体');
-define($constpref.'_NOTIFY_GLOBAL_NEWPOSTCAP', 'このモジュール全体のいずれかに投稿があった場合に通知する');
+define($constpref.'_NOTIFY_GLOBAL_NEWPOSTCAP', '全カテゴリーのいずれかに投稿があった場合に通知する');
 define($constpref.'_NOTIFY_GLOBAL_NEWPOSTSBJ', '[{X_SITENAME}] {X_MODULE}: 投稿 {POST_TITLE}');
 
 define($constpref.'_NOTIFY_GLOBAL_NEWTOPIC', '新トピック全体');
-define($constpref.'_NOTIFY_GLOBAL_NEWTOPICCAP', 'このモジュール全体のいずれかに新規トピックが立てられた場合に通知する');
+define($constpref.'_NOTIFY_GLOBAL_NEWTOPICCAP', '全カテゴリーのいずれかに新規トピックが立てられた場合に通知する');
 define($constpref.'_NOTIFY_GLOBAL_NEWTOPICSBJ', '[{X_SITENAME}] {X_MODULE}: 新トピック {TOPIC_TITLE}');
 
 define($constpref.'_NOTIFY_GLOBAL_NEWFORUM', '新フォーラム全体');
-define($constpref.'_NOTIFY_GLOBAL_NEWFORUMCAP', 'このモジュール全体のいずれかに新フォーラムが立てられた場合に通知する');
+define($constpref.'_NOTIFY_GLOBAL_NEWFORUMCAP', '全カテゴリーのいずれかに新フォーラムが立てられた場合に通知する');
 define($constpref.'_NOTIFY_GLOBAL_NEWFORUMSBJ', '[{X_SITENAME}] {X_MODULE}: 新フォーラム {FORUM_TITLE}');
 
 define($constpref.'_NOTIFY_GLOBAL_NEWPOSTFULL', '投稿全文');
-define($constpref.'_NOTIFY_GLOBAL_NEWPOSTFULLCAP', '投稿全文を通知します。（対象はモジュール全体）');
+define($constpref.'_NOTIFY_GLOBAL_NEWPOSTFULLCAP', '投稿全文を通知します。（対象は全カテゴリー）');
 define($constpref.'_NOTIFY_GLOBAL_NEWPOSTFULLSBJ', '[{X_SITENAME}] {POST_TITLE}');
 define($constpref.'_NOTIFY_GLOBAL_WAITING', '承認待ち');
 define($constpref.'_NOTIFY_GLOBAL_WAITINGCAP', '承認を要する投稿・編集が行われた場合に通知します。管理者専用');

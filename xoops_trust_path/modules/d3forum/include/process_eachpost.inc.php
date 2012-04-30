@@ -1,7 +1,7 @@
 <?php
 
 	// can_vote
-	$can_vote = ( $uid || $xoopsModuleConfig['guest_vote_interval'] ) ? true : false ;
+	$can_vote = ( ($uid || $xoopsModuleConfig['guest_vote_interval']) && $xoopsModuleConfig['use_vote'] == 1 ) ? true : false ;
 
 	// invisible
 	if( $post_row['invisible'] || ! $post_row['approval'] ) {
@@ -20,7 +20,13 @@
 	$poster_obj =& $user_handler->get( intval( $post_row['uid'] ) ) ;
 	if( is_object( $poster_obj ) ) {
 		// active user's post
-		$poster_uname4disp = $poster_obj->getVar( 'uname' ) ;
+		// naao from
+		if ($xoopsModuleConfig['use_name'] == 1 && $poster_obj->getVar( 'name' ) ) {
+			$poster_uname4disp = $poster_obj->getVar( 'name' ) ;
+		} else {
+			$poster_uname4disp = $poster_obj->getVar( 'uname' ) ;
+		}
+		// naao to
 		$poster_regdate = $poster_obj->getVar( 'user_regdate' ) ;
 		$poster_from4disp = $myts->makeTboxData4Show( $poster_obj->getVar( 'user_from' ) , 1 ) ;
 		$poster_rank = $poster_obj->rank() ;

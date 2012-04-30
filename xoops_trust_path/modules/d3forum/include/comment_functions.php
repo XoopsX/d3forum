@@ -89,6 +89,9 @@ function d3forum_display_comment( $mydirname , $forum_id , $params )
 			$external_dirname = $GLOBALS['xoopsModule']->getVar('dirname') ;
 		}
 
+		// naao from
+		require_once dirname(dirname(__FILE__)).'/class/D3commentObj.class.php' ;
+
 		// search and include the class file
 		if( $external_trustdirname && file_exists( XOOPS_TRUST_PATH."/modules/$external_trustdirname/class/{$class_name}.class.php" ) ) {
 			require_once XOOPS_TRUST_PATH."/modules/$external_trustdirname/class/{$class_name}.class.php" ;
@@ -99,15 +102,21 @@ function d3forum_display_comment( $mydirname , $forum_id , $params )
 			$external_dirname = '' ;
 			$external_trustdirname = '' ;
 		}
+		
+		$m_params['forum_dirname'] = $mydirname ;
+		$m_params['external_dirname'] = $external_dirname ;
+		$m_params['class_name'] = $class_name ;
+		$m_params['external_trustdirname'] = $external_trustdirname  ;
 
 		if( class_exists( $class_name ) ) {
-			$d3com =& new $class_name( $mydirname , $external_dirname ) ;
-			$external_link_id = $d3com->external_link_id( $params ) ;
+			$obj =& D3commentObj::getInstance ( $m_params ) ;
+			$external_link_id = $obj->d3comObj->external_link_id( $params ) ;
 		}
+		// naao to
 	}
 
 	// for conventional module
-	if( ! is_object( $d3com ) ) {
+	if( ! is_object( $obj->d3comObj ) ) {
 		if( ! empty( $params['itemname'] ) ) {
 			$external_link_id = @$_GET[ $params['itemname'] ] ;
 			if( empty( $external_link_id ) ) return ;
@@ -256,14 +265,51 @@ function d3forum_render_comments( $mydirname , $forum_id , $params , &$smarty )
 		$posts = array() ;
 		$sql_whr = "t.forum_id=$forum_id AND ($whr_invisible) AND t.topic_external_link_id='".addslashes($external_link_id)."'" ;
 
+		// post order
+		$postorder = 0 ;
+		$postorder4sql = 'post_time DESC' ;
+		if ( isset($params['order'] ) ) {
+			if ( $params['order'] == 'asc' ) {
+				$postorder = 1 ;
+				$postorder4sql = 'post_time ASC' ;
+			}
+		}
+
+	    // post_hits ~ pagenavi //naao from
 		// count post
-		$sql = "SELECT COUNT(*) FROM ".$db->prefix($mydirname."_posts")." p LEFT JOIN ".$db->prefix($mydirname."_topics")." t ON p.topic_id=t.topic_id WHERE $sql_whr" ;
+		$sql = "SELECT COUNT(post_id) FROM ".$db->prefix($mydirname."_posts")." p LEFT JOIN ".$db->prefix($mydirname."_topics")." t ON p.topic_id=t.topic_id WHERE $sql_whr" ;
 		if( ! $nrs = $db->query( $sql ) ) die( _MD_D3FORUM_ERR_SQL.__LINE__ ) ;
 		list( $post_hits ) = $db->fetchRow( $nrs ) ;
-		$topic_hits = 0 ;
 
-		$sql = "SELECT p.*,t.topic_locked FROM ".$db->prefix($mydirname."_posts")." p LEFT JOIN ".$db->prefix($mydirname."_topics")." t ON p.topic_id=t.topic_id WHERE $sql_whr ORDER BY post_time DESC LIMIT {$params['posts_num']}" ;
+		// pagenav
+		$pagenav = '' ;
+		// LIMIT
+		$num = $params['posts_num'] < 5 ? 5 : intval( $params['posts_num'] ) ;
+		$pos = 0 ;
+		if( $post_hits > $num ) {
+			// POS
+			$pos = isset( $_GET['d3f_pos'] ) ? intval( $_GET['d3f_pos'] ) 
+				: (($postorder==1) ? (int)(($post_hits-1) / $num) * $num : 0) ;
+
+	            if( !empty($_SERVER['QUERY_STRING'])) {
+ 	               if( preg_match("/^d3f_pos=[0-9]+/", $_SERVER['QUERY_STRING']) ) {
+	                    $query4nav = "";
+	                } else {
+	                    $query4nav = preg_replace("/^(.*)\&d3f_pos=[0-9]+/", "$1", $_SERVER['QUERY_STRING']);
+	                }
+	            } else {
+	                $query4nav = "";
+	            }
+			require_once dirname( dirname(__FILE__) ).'/class/D3forumPagenav.class.php' ;
+			$pagenav_obj = new D3forumPagenav( $post_hits , $num , $pos , 'd3f_pos', $query4nav ) ;
+			$pagenav = $pagenav_obj->getNav() ;
+		}
+
+	    // post_hits ~ pagenavi //naao to
+
+		$sql = "SELECT p.*,t.topic_locked FROM ".$db->prefix($mydirname."_posts")." p LEFT JOIN ".$db->prefix($mydirname."_topics")." t ON p.topic_id=t.topic_id WHERE $sql_whr ORDER BY $postorder4sql LIMIT $pos,$num" ; //naao
 		if( ! $prs = $db->query( $sql ) ) die( _MD_D3FORUM_ERR_SQL.__LINE__ ) ;
+
 		while( $post_row = $db->fetchArray( $prs ) ) {
 		
 			// get poster's information ($poster_*), $can_reply, $can_edit, $can_delete
@@ -275,6 +321,7 @@ function d3forum_render_comments( $mydirname , $forum_id , $params , &$smarty )
 				'id' => intval( $post_row['post_id'] ) ,
 				'subject' => $myts->makeTboxData4Show( $post_row['subject'] , $post_row['number_entity'] , $post_row['special_entity'] ) ,
 				'pid' => intval( $post_row['pid'] ),
+				'topic_id' => intval( $post_row['topic_id'] ),
 				'post_time' => intval( $post_row['post_time'] ) ,
 				'post_time_formatted' => formatTimestamp( $post_row['post_time'] , 'm' ) ,
 				'modified_time' => intval( $post_row['modified_time'] ) ,
@@ -321,12 +368,11 @@ function d3forum_render_comments( $mydirname , $forum_id , $params , &$smarty )
 			) ;
 		}
 
-		if( @$params['order'] == 'asc' ) {
-			$posts = array_reverse( $posts ) ; // thx naao
-		}
+		//if( @$params['order'] == 'asc' && !empty($posts)) {
+		//	$posts = array_reverse( $posts ) ; // thx naao
+		//}
 
 		$topics = array() ;
-	}
 
 	// form elements or javascripts for anti-SPAM
 	if( d3forum_common_is_necessary_antispam( $xoopsUser , $xoopsModuleConfig ) ) {
@@ -336,8 +382,55 @@ function d3forum_render_comments( $mydirname , $forum_id , $params , &$smarty )
 		$antispam4assign = array() ;
 	}
 
+	// naao from
+	if( is_object( $xoopsUser ) ) {
+		if ($xoopsModuleConfig['use_name'] == 1 && $xoopsUser->getVar( 'name' ) ) {
+			$poster_uname4disp = $xoopsUser->getVar( 'name' ) ;
+		} else {
+			$poster_uname4disp = $xoopsUser->getVar( 'uname' ) ;
+		}
+	} else { $poster_uname4disp = '' ;}
+	// naao to
+
+	}
+
+$tree = array();
+if( $external_link_id >0 ) {
+
+	$sql = "SELECT p.*, t.topic_locked, t.topic_id, t.forum_id, t.topic_last_uid, t.topic_last_post_time 
+		FROM ".$db->prefix($mydirname."_topics")." t 
+		LEFT JOIN ".$db->prefix($mydirname."_posts")." p ON p.topic_id=t.topic_id 
+		WHERE t.forum_id=$forum_id AND ($whr_invisible) AND p.depth_in_tree='0' 
+			AND (t.topic_external_link_id='".addslashes($external_link_id)."' ) " ;		//naao
+	if( ! $prs = $db->query( $sql ) ) die( _MD_D3FORUM_ERR_SQL.__LINE__ ) ;
+	while( $post_row = $db->fetchArray( $prs ) ) {
+		// topics array
+		$topic_last_uid = intval( $post_row['topic_last_uid'] ) ;
+		$topic_last_post_time = intval( $post_row['topic_last_post_time'] ) ;
+		$topic_last_uname = XoopsUser::getUnameFromId( $topic_last_uid , $xoopsModuleConfigs['use_name']) ; //naao usereal=1
+		$topic_last_uname = $topic_last_uid > 0 ? $topic_last_uname : $myts->makeTboxData4Show( $post_row['guest_name'] ) ;
+
+		$tree[] = array(
+			'id' => intval( $post_row['post_id'] ) ,
+			'subject' => $myts->makeTboxData4Show( $post_row['subject'] , $post_row['number_entity'] ,
+					 $post_row['special_entity'] ) ,
+			'post_time_formatted' => formatTimestamp( $post_row['post_time'] , 'm' ) ,
+			'poster_uid' => $topic_last_uid ,
+			'poster_uname' => $topic_last_uname ,
+			'icon' => intval( $post_row['icon'] ) ,
+			'depth_in_tree' => intval( $post_row['depth_in_tree'] ) ,
+			'order_in_tree' => intval( $post_row['order_in_tree'] ) ,
+			'topic_id' => intval( $post_row['topic_id'] ) ,
+			'ul_in' => '<ul><li>' ,
+			'ul_out' => '</li></ul>' ,
+		);
+	}
+		$topics_count = count($tree) ;
+}
+	// naao to
+
 	require_once XOOPS_ROOT_PATH.'/class/template.php' ;
-	$tpl =& new XoopsTpl() ;
+	$tpl = new XoopsTpl() ;
 	$tpl->assign(
 		array(
 			'mydirname' => $mydirname ,
@@ -345,7 +438,7 @@ function d3forum_render_comments( $mydirname , $forum_id , $params , &$smarty )
 			'mod_imageurl' => XOOPS_URL.'/modules/'.$mydirname.'/'.$xoopsModuleConfig['images_dir'] ,
 			'mod_config' => $xoopsModuleConfig ,
 			'uid' => $uid ,
-			'uname' => is_object( $xoopsUser ) ? $xoopsUser->getVar('uname') : '' ,
+			'uname' => $poster_uname4disp ,
 			'subject_raw' => $params['subject_raw'] ,
 			'postorder' => $postorder ,
 			'icon_meanings' => $d3forum_icon_meanings ,
@@ -358,7 +451,8 @@ function d3forum_render_comments( $mydirname , $forum_id , $params , &$smarty )
 			'odr_options' => @$odr_options ,
 			'solved_options' => @$solved_options ,
 //			'query' => $query4assign ,
-//			'pagenav' => @$pagenav ,
+			'pagenav' => $pagenav ,	//naao
+			'pos' => $pos ,		//naao
 			'external_link_id' => $external_link_id ,
 			'page' => 'listtopics' ,
 			'plugin_params' => $params ,
@@ -366,6 +460,16 @@ function d3forum_render_comments( $mydirname , $forum_id , $params , &$smarty )
 			'antispam' => $antispam4assign ,
 		)
 	) ;
+	// naao from
+	if( @$params['view'] != 'listtopics' && $external_link_id >0) {
+		$tpl->assign(
+			array(
+				'tree' => $tree ,	// naao
+				'tree_tp_count' => $topics_count ,	// naao
+			)
+		) ;
+	}
+	// naao to
 	$tpl->display( $this_template ) ;
 }
 

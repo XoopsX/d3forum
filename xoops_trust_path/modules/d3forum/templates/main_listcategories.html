@@ -1,4 +1,3 @@
-
 <!-- start module contents -->
 <!-- breadcrumbs -->
 <div class="d3f_breadcrumbs">
@@ -33,8 +32,9 @@
 <!-- start categories -->
 <{foreach item="category" from=$top_categories}>
 <{if $category.subcategories or $category.forums or $xoops_isadmin}>
-<div class="d3f_head">
-<h2><a href="<{$mod_url}>/index.php?cat_id=<{$category.id}>"><img src="<{$mod_imageurl}>/category_<{$category.bit_new}>.gif" alt="" width="16" height="16" /> <{$category.title}></a></h2>
+
+<div class="itemHead">
+<h2 class="itemTitle"><a href="<{$mod_url}>/index.php?cat_id=<{$category.id}>"><img src="<{$mod_imageurl}>/category_<{$category.bit_new}>.gif" alt="" width="16" height="16" /> <{$category.title}></a></h2>
 	<p>
 		<{include file="db:`$mydirname`_inc_moderators.html" target=$category}>
 		<{$smarty.const._MD_D3FORUM_TOTALTOPICSCOUNT}>: <{$category.topics_count_in_tree}> <{$smarty.const._MD_D3FORUM_TOTALPOSTSCOUNT}>: <{$category.posts_count_in_tree}> 

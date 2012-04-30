@@ -1,4 +1,3 @@
-
 <!-- start module contents -->
 <!-- breadcrumbs -->
 <div class="d3f_breadcrumbs">
@@ -38,7 +37,7 @@
 <{/if}>
 
 <{if $subcategories}>
-<h2 class="d3f_head"><{$smarty.const._MD_D3FORUM_SUBCATEGORIES}></h2>
+<h2 class="head"><{$smarty.const._MD_D3FORUM_SUBCATEGORIES}></h2>
 <ul class="d3f_subcategories">
 <{foreach item=subcategory from=$subcategories}>
 	<li>
@@ -51,7 +50,7 @@
 <{/if}>
 
 <{if $forums}>
-<h2 class="d3f_head"><{$smarty.const._MD_D3FORUM_FORUM}></h2>
+<h2 class="head"><{$smarty.const._MD_D3FORUM_FORUM}></h2>
 <table class="outer d3f_table">
 <thead>
 <tr class="head">
@@ -89,7 +88,13 @@
 	</dl></td>
 	<td><{$forum.topics_count}></td>
 	<td><{$forum.posts_count}></td>
-	<td class="d3f_posters"><{if $forum.last_post_time}><{$forum.last_post_time_formatted}><br /><{$forum.last_post_uname}> <a href="<{$mod_url}>/index.php?post_id=<{$forum.last_post_id}>"><img src="<{$mod_imageurl}>/posticon<{$forum.last_post_icon}>.gif" alt="<{$forum.last_post_subject}>" title="<{$forum.last_post_subject}>" /></a><{/if}></td>
+	<td class="d3f_posters"><{if $forum.last_post_time}><{$forum.last_post_time_formatted}><br />
+	<{if $forum.last_post_gname}>
+		<{$forum.last_post_gname}>
+	<{else}>
+		<{$forum.last_post_uname}>
+	<{/if}>
+	 <a href="<{$mod_url}>/index.php?post_id=<{$forum.last_post_id}>"><img src="<{$mod_imageurl}>/posticon<{$forum.last_post_icon}>.gif" alt="<{$forum.last_post_subject}>" title="<{$forum.last_post_subject}>" /></a><{/if}></td>
 <{/strip}>
 </tr>
 <{/foreach}>

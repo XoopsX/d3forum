@@ -71,6 +71,18 @@ if( ! empty( $d3forum_output_rss ) ) {
 	exit ;
 } else {
 	// display
+
+	// For XCL 2.2 Call addMeta //nao-pon
+	if ($d3forum_meta_description) {
+		if (defined('LEGACY_MODULE_VERSION') && version_compare(LEGACY_MODULE_VERSION, '2.2', '>=')) {
+			$xclRoot =& XCube_Root::getSingleton();
+			$headerScript = $xclRoot->mContext->getAttribute('headerScript');
+			$headerScript->addMeta('description', $d3forum_meta_description);
+		} elseif (isset($xoTheme) && is_object($xoTheme)) {
+			$xoTheme->addMeta('meta', 'description', $d3forum_meta_description);
+		}
+	}
+
 	include XOOPS_ROOT_PATH.'/footer.php';
 }
 

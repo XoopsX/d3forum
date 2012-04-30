@@ -14,7 +14,7 @@ var $mytrustdirname = '' ;
 var $mod_config = array() ;
 var $smarty = null ;
 
-function D3commentAbstract( $d3forum_dirname , $target_dirname , $target_trustdirname = '' )
+public function __construct( $d3forum_dirname , $target_dirname , $target_trustdirname = '' )
 {
 	$this->mydirname = $target_dirname ;
 	$this->mytrustdirname = $target_trustdirname ;
@@ -208,7 +208,6 @@ function onUpdate( $mode , $link_id , $forum_id , $topic_id , $post_id = 0 )
 // override it if necessary
 function canVote( $link_id , $original_flag , $post_id )
 {
-	return true ;
 	return $original_flag ;
 }
 

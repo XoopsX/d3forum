@@ -166,7 +166,7 @@ CREATE TABLE xoops_d3forum_category_access (
   KEY (uid),
   KEY (groupid),
   KEY (can_post)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 ALTER TABLE xoops_d3forum_categories
 ADD cat_topics_count int(8) NOT NULL default 0 AFTER cat_desc,
@@ -201,7 +201,7 @@ CREATE TABLE xoops_d3forum_post_votes (
   PRIMARY KEY (vote_id),
   KEY (post_id),
   KEY (vote_ip)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 
 

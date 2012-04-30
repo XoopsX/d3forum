@@ -14,7 +14,7 @@ CREATE TABLE category_access (
   KEY (uid),
   KEY (groupid),
   KEY (can_post)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 
 CREATE TABLE forum_access (
@@ -32,7 +32,7 @@ CREATE TABLE forum_access (
   KEY (uid),
   KEY (groupid),
   KEY (can_post)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 
 CREATE TABLE categories (
@@ -57,7 +57,7 @@ CREATE TABLE categories (
   PRIMARY KEY (cat_id),
   KEY (cat_weight),
   KEY (pid)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 
 CREATE TABLE forums (
@@ -77,7 +77,7 @@ CREATE TABLE forums (
   KEY (forum_last_post_time),
   KEY (forum_weight),
   KEY (cat_id)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 
 CREATE TABLE topics (
@@ -110,7 +110,7 @@ CREATE TABLE topics (
   KEY (topic_invisible),
   KEY (topic_votes_sum),
   KEY (topic_votes_count)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 
 CREATE TABLE posts (
@@ -157,7 +157,7 @@ CREATE TABLE posts (
   KEY (invisible),
   KEY (votes_sum),
   KEY (votes_count)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 
 CREATE TABLE users2topics (
@@ -172,7 +172,7 @@ CREATE TABLE users2topics (
   KEY (u2t_time),
   KEY (u2t_marked),
   KEY (u2t_rsv)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 
 CREATE TABLE post_votes (
@@ -185,7 +185,7 @@ CREATE TABLE post_votes (
   PRIMARY KEY (vote_id),
   KEY (post_id),
   KEY (vote_ip)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 
 CREATE TABLE post_histories (
@@ -195,4 +195,4 @@ CREATE TABLE post_histories (
   data text,
   PRIMARY KEY (history_id),
   KEY (post_id)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;

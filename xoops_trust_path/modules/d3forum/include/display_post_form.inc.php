@@ -62,6 +62,17 @@ if( d3forum_common_is_necessary_antispam( $xoopsUser , $xoopsModuleConfig ) ) {
 $d3forum_wysiwygs = array( 'name' => 'message' , 'value' => d3forum_common_unhtmlspecialchars( $message4html ) ) ;
 include dirname(dirname(__FILE__)).'/include/wysiwyg_editors.inc.php' ;
 
+	// naao from
+if( is_object( $xoopsUser ) ) {
+	if ($xoopsModuleConfig['use_name'] == 1 && $xoopsUser->getVar( 'name' ) ) {
+		$poster_uname4disp = $xoopsUser->getVar( 'name' ) ;
+	} else {
+		$poster_uname4disp = $xoopsUser->getVar( 'uname' ) ;
+	}
+}
+	// naao to
+
+
 // dare to set 'template_main' after header.php (for disabling cache)
 include XOOPS_ROOT_PATH.'/header.php' ;
 $xoopsOption['template_main'] = $mydirname.'_main_post_form.html' ;
@@ -75,7 +86,8 @@ $xoopsTpl->assign( array(
 	'ispreview' => intval( @$ispreview ) ,
 	'formtitle' => $formTitle ,
 	'uid' => $uid ,
-	'uname' => $uid ? $xoopsUser->getVar('uname') : @$guest_name4html ,
+	//'uname' => $uid ? $xoopsUser->getVar('uname') : @$guest_name4html ,
+	'uname' => $uid ? $poster_uname4disp : @$guest_name4html ,
 	'guest_name' => @$guest_name4html ,
 	'guest_email' => @$guest_email4html ,
 	'guest_url' => @$guest_url4html ,

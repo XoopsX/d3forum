@@ -130,7 +130,7 @@ if( $html ) $message = d3forum_transact_htmlpurify( $message ) ;
 // Validate message
 $preview_message4html = $myts->displayTarea( $message , $html , $smiley , $xcode , @$xoopsModuleConfig['allow_textimg'] , $br , 0 , $number_entity , $special_entity ) ;
 require_once dirname(dirname(__FILE__)).'/class/D3forumMessageValidator.class.php' ;
-$validator =& new D3forumMessageValidator() ;
+$validator = new D3forumMessageValidator() ;
 if( ! $validator->validate_by_rendered( $preview_message4html ) ) {
 	// if message is invalid, force to preview instead of post
 	$preview_message4html = $validator->get_errors4html() ;
@@ -328,10 +328,22 @@ if( ! empty( $_POST['contents_preview'] ) ) {
 		if( ! $db->getAffectedRows() ) $db->query( "INSERT INTO ".$db->prefix($mydirname."_users2topics")." SET uid=$uid,topic_id=$topic_id,u2t_marked=$u2t_marked,u2t_time=UNIX_TIMESTAMP()" ) ;
 	}
 
+		// naao from
+		if ( $uid > 0 && ! $hide_uid ){
+			if ($xoopsModuleConfig['use_name'] == 1 && $xoopsUser->getVar( 'name' ) ) {
+				$poster_uname4disp = $xoopsUser->getVar( 'name' ) ;
+			} else {
+				$poster_uname4disp = $xoopsUser->getVar( 'uname' ) ;
+			}
+		} else {
+			$poster_uname4disp = $guest_name ;
+		}
+
 	// Define tags for notification message
 	$tags = array(
-		'POSTER_UNAME' => $uid > 0 && ! $hide_uid ? $xoopsUser->getVar('uname') :  $guest_name ,
-
+		//'POSTER_UNAME' => $uid > 0 && ! $hide_uid ? $xoopsUser->getVar('uname') :  $guest_name ,
+		'POSTER_UNAME' => $poster_uname4disp ,
+		// naao to
 		'POST_TITLE' => $subject ,
 		'POST_BODY' => $message ,
 		'POST_BODY_NO_TAGS' => strip_tags( $message ) ,

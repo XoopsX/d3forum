@@ -168,14 +168,21 @@ function d3forum_get_forum_moderate_groups4show( $mydirname , $forum_id )
 // check done
 function d3forum_get_forum_moderate_users4show( $mydirname , $forum_id )
 {
+	global $xoopsUser, $xoopsModuleConfig ;	// naao edited
+
 	$db =& Database::getInstance() ;
 
 	$forum_id = intval( $forum_id ) ;
 
 	$ret = array() ;
-	$sql = 'SELECT u.uid, u.uname FROM '.$db->prefix($mydirname.'_forum_access').' fa LEFT JOIN '.$db->prefix('users').' u ON fa.uid=u.uid WHERE fa.uid IS NOT NULL AND fa.is_moderator AND forum_id='.$forum_id ;
+	$sql = 'SELECT u.uid, u.uname, u.name FROM '.$db->prefix($mydirname.'_forum_access').' fa LEFT JOIN '.$db->prefix('users').' u ON fa.uid=u.uid WHERE fa.uid IS NOT NULL AND fa.is_moderator AND forum_id='.$forum_id ;
 	$mrs = $db->query( $sql ) ;
-	while( list( $mod_uid , $mod_uname ) = $db->fetchRow( $mrs ) ) {
+		// naao from
+	while( list( $mod_uid , $mod_uname , $mod_name) = $db->fetchRow( $mrs ) ) {
+		if ($xoopsModuleConfig['use_name'] == 1 && $mod_name ) {
+			$mod_uname = $mod_name ;
+		}
+		// naao to
 		$ret[] = array(
 			'uid' => $mod_uid ,
 			'uname' => htmlspecialchars( $mod_uname , ENT_QUOTES ) ,
@@ -210,14 +217,21 @@ function d3forum_get_category_moderate_groups4show( $mydirname , $cat_id )
 // check done
 function d3forum_get_category_moderate_users4show( $mydirname , $cat_id )
 {
+	global $xoopsUser, $xoopsModuleConfig ;	// naao edited
+
 	$db =& Database::getInstance() ;
 
 	$cat_id = intval( $cat_id ) ;
 
 	$ret = array() ;
-	$sql = 'SELECT u.uid, u.uname FROM '.$db->prefix($mydirname.'_category_access').' ca LEFT JOIN '.$db->prefix('users').' u ON ca.uid=u.uid WHERE ca.uid IS NOT NULL AND ca.is_moderator AND cat_id='.$cat_id ;
+	$sql = 'SELECT u.uid, u.uname, u.name FROM '.$db->prefix($mydirname.'_category_access').' ca LEFT JOIN '.$db->prefix('users').' u ON ca.uid=u.uid WHERE ca.uid IS NOT NULL AND ca.is_moderator AND cat_id='.$cat_id ;
 	$mrs = $db->query( $sql ) ;
-	while( list( $mod_uid , $mod_uname ) = $db->fetchRow( $mrs ) ) {
+		// naao from
+	while( list( $mod_uid , $mod_uname , $mod_name) = $db->fetchRow( $mrs ) ) {
+		if ($xoopsModuleConfig['use_name'] == 1 && $mod_name ) {
+			$mod_uname = $mod_name ;
+		}
+		// naao to
 		$ret[] = array(
 			'uid' => $mod_uid ,
 			'uname' => htmlspecialchars( $mod_uname , ENT_QUOTES ) ,
@@ -303,41 +317,19 @@ function d3forum_get_comment_description( $mydirname , $external_link_format , $
 	else return $d3com->fetchSummary( $external_link_id ) ;
 }
 
-
-// get object for comment integration
-function &d3forum_main_get_comment_object( $mydirname , $external_link_format )
+// get object for comment integration  // naao modified
+function &d3forum_main_get_comment_object( $forum_dirname, $external_link_format )
 {
-	include_once dirname(dirname(__FILE__)).'/class/D3commentAbstract.class.php' ;
-	@list( $external_dirname , $classname , $external_trustdirname ) = explode( '::' , $external_link_format ) ;
-	if( empty( $classname ) ) {
-		$obj =& new D3commentAbstract( $mydirname , '' ) ;
-		return $obj ;
-	}
+	require_once dirname(dirname(__FILE__)).'/class/D3commentObj.class.php' ;
 
-	// search the class file
-	$class_bases = array(
-		XOOPS_ROOT_PATH.'/modules/'.$external_dirname.'/class' ,
-		XOOPS_TRUST_PATH.'/modules/'.$external_trustdirname.'/class' ,
-		XOOPS_TRUST_PATH.'/modules/d3forum/class' ,
-	) ;
+	$params['forum_dirname'] = $forum_dirname ;
 
-	foreach( $class_bases as $class_base ) {
-		if( file_exists( $class_base.'/'.$classname.'.class.php' ) ) {
-			require_once $class_base.'/'.$classname.'.class.php' ;
-			break ;
-		}
-	}
+	@list( $params['external_dirname'] , $params['classname'] , $params['external_trustdirname'] ) 
+		= explode( '::' , $external_link_format ) ;
 
-	// check the class
-	if( ! $classname || ! class_exists( $classname ) ) {
-		$obj =& new D3commentAbstract( $mydirname , $external_dirname ) ;
-		return $obj ;
-	}
-
-	$obj =& new $classname( $mydirname , $external_dirname , $external_trustdirname ) ;
-	return $obj ;
+	$obj =& D3commentObj::getInstance ( $params ) ;
+	return $obj->d3comObj;
 }
-
 
 // get samples of category options
 function d3forum_main_get_categoryoptions4edit( $d3forum_configs_can_be_override )
@@ -383,6 +375,5 @@ function d3forum_main_posthook_sametopic( $mydirname )
 		$_POST['pid'] = $pid ;
 	}
 }
-
 
 ?>
