@@ -10,8 +10,8 @@
 
 <h2 class="head"><{$smarty.const._MD_D3FORUM_POSTSTREE}></h2>
 
-<div class="boxNavi" style="text-align:center;">
 <{if $pagenav}>
+<div class="boxNavi" style="text-align:center;">
 <ul class="itemBody">
 <{foreach from=$pagenav item=nav_}>
 <li class=<{$nav_.class}>><span>
@@ -22,8 +22,8 @@
 </span></li>
 <{/foreach}>
 </ul><!-- /itemIBody -->
-<{/if}>
 </div><!-- /boxNavi -->
+<{/if}>
 
 <!-- start post tree  -->
 <{foreach from=$posts item=eachpost}>
