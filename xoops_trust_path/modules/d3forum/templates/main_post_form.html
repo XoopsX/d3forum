@@ -109,11 +109,28 @@
 				<{if $body_wysiwyg}>
 					<{$body_wysiwyg}>
 				<{else}>
-					<input type="checkbox" id="message_bbcode_onoff" onclick="if(this.checked){xoopsGetElementById('message_bbcode_buttons_pre').style.display='block';xoopsGetElementById('message_bbcode_buttons_post').style.display='block'}else{xoopsGetElementById('message_bbcode_buttons_pre').style.display='none';xoopsGetElementById('message_bbcode_buttons_post').style.display='none'};" /><label for="message_bbcode_onoff"><{$smarty.const._MD_D3FORUM_LABEL_INPUTHELPER}></label>
-					<br />
-					<{xoopsdhtmltarea name="message" cols="60" rows="15" value=$message pre_style="display:none;" post_style="display:none;"}>
+					<{if $smarty.const.LEGACY_BASE_VERSION|version_compare:'2.2':'>='}>
+						<{if $allow_html && (!$message || $html_checked)}>
+							<{assign var=editor value=html}>
+						<{else}>
+						    <{assign var=editor value=bbcode}>
+						<{/if}>
+						<{xoops_dhtmltarea class=$editor name=message id=message cols=60 rows=15 value=$message|htmlspecialchars_decode:$smarty.const.ENT_QUOTES editor=$editor}>
+						<{if $legacy_module == 'legacy'}>
+							<{assign var=editor value=""}>
+						<{/if}>
+						<{if (!$message && $editor == 'html')}>
+							<{assign var=html_checked value='checked="checked"'}>
+							<{assign var=xcode_checked value=""}>
+							<{assign var=br_checked value=""}>
+						<{/if}>
+					<{else}>
+						<input type="checkbox" id="message_bbcode_onoff" onclick="if(this.checked){xoopsGetElementById('message_bbcode_buttons_pre').style.display='block';xoopsGetElementById('message_bbcode_buttons_post').style.display='block'}else{xoopsGetElementById('message_bbcode_buttons_pre').style.display='none';xoopsGetElementById('message_bbcode_buttons_post').style.display='none'};" /><label for="message_bbcode_onoff"><{$smarty.const._MD_D3FORUM_LABEL_INPUTHELPER}></label>
+						<br />
+						<{xoopsdhtmltarea name="message" cols="60" rows="15" value=$message pre_style="display:none;" post_style="display:none;"}>
+					<{/if}>
 				<{/if}>
-				<{if $reference_quote}>
+				<{if ($reference_quote && !$editor)}>
 					<br />
 					<input type="button" name="quote" id="quote" onclick="d3forum_quote_message();" value="<{$smarty.const._MD_D3FORUM_BTN_QUOTE}>" />
 				<{/if}>
