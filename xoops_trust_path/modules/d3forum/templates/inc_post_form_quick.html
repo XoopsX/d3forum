@@ -56,12 +56,12 @@
 				<td class="head"><{$smarty.const._MD_D3FORUM_TH_BODY}></td>
 				<td class="even">
 					<textarea name="message" cols="50" rows="8"><{$message}></textarea>
+					<{$antispam.html_in_form}>
 				</td>
 			</tr>
 			<tr valign="top" align="left">
 				<td class="head"></td>
 				<td class="even">
-					<{$antispam.html_in_form}>
 					<input type="submit" class="formButton" name="contents_submit"  id="contents_submit" value="<{$smarty.const._MD_D3FORUM_DOPOST}>" />
 					<{if $external_link_id}>
 					<a href="<{$mod_url}>/index.php?page=newtopic&amp;forum_id=<{$forum.id}>&amp;external_link_id=<{$external_link_id|escape:"url"}>&amp;subject=<{$subject_raw|escape:"url"}>"><{$smarty.const._MD_D3FORUM_LINK_RICHERCOMMENTFORM}></a>
