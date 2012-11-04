@@ -195,6 +195,14 @@ function validate_id( $link_id )
 	return $ret ;
 }
 
+// naao added Nov.2012
+// array of users id to be notified
+// if you want to check authrity validation for parent entry, override it
+function validate_users2notify( $link_id, $users2notify=array() )
+{
+	return $users2notify ;
+}
+
 
 // callback on newtopic/edit/reply/delete
 // abstract
