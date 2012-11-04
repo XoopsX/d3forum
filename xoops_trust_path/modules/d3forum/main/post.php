@@ -361,6 +361,15 @@ if( ! empty( $_POST['contents_preview'] ) ) {
 	if( empty( $users2notify ) ) $users2notify = array( 0 ) ;
 
 	if( ! empty( $need_notify ) ) {
+		// naao added Nov.2012 for check auth for parent entry
+		if( is_object( $d3com ) && method_exists( $d3com, 'validate_users2notify') ) {
+			$external_link_id = (int)$external_link_id;
+			if( $external_link_id === $d3com->validate_id( $external_link_id ) ) {
+				$users2notify = $d3com->validate_users2notify( $external_link_id, $users2notify ) ;
+			} else {
+				$users2notify = array( );
+			}
+		}
 		if( $mode == 'newtopic' ) {
 			// Notify for newtopic
 			d3forum_trigger_event( $mydirname , 'global' , 0 , 'newtopic' , $tags , $users2notify ) ;

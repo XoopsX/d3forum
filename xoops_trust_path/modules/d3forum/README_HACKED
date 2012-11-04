@@ -1,6 +1,8 @@
 This module package is hacked version of GIJOE's d3forum-0.85.
 
 revision notes
+2012-11-4
+- Version 0.87 added notification user validation for d3 integrated comment of parent entry.
 
 2011-09-14
 - On post view and postslist , overrides the meta tag 'description' of html_header by post's text.

@@ -11,7 +11,7 @@ $constpref = '_MI_' . strtoupper( $mydirname ) ;
 
 $modversion['name'] = constant($constpref.'_NAME') ;
 $modversion['description'] = constant($constpref.'_DESC') ;
-$modversion['version'] = 0.86 ;
+$modversion['version'] = 0.87 ;
 $modversion['credits'] = "PEAK Corp. and JIDAIKOBO";
 $modversion['author'] = "GIJ=CHECKMATE and JIDAIKOBO and hackd naao, nao-pon, domifara" ;
 $modversion['help'] = "" ;
