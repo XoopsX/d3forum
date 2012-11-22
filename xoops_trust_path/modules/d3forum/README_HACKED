@@ -1,6 +1,10 @@
 This module package is hacked version of GIJOE's d3forum-0.85.
 
 revision notes
+2012-11-21
+ - Version 0.88 fixed bug of RSS feed.
+   See http://usadeki.jp/modules/d3forum/index.php?topic_id=785.
+
 2012-11-4
 - Version 0.87 added notification user validation for d3 integrated comment of parent entry.
 

@@ -55,17 +55,18 @@ $xoopsTpl->assign(
 if( ! empty( $d3forum_output_rss ) ) {
 	// RSS 2.0
 	if( function_exists( 'mb_http_output' ) ) mb_http_output( 'pass' ) ;
+
+	$data = $xoopsTpl->get_template_vars() ;
 	if( _CHARSET != 'UTF-8' ) {
-		$data = $xoopsTpl->get_template_vars() ;
 		d3forum_common_utf8_encode_recursive( $data ) ;
-		$xoopsTpl->assign( $data ) ;
-		if( empty( $_GET['forum_id'] ) ) {
-			$rss = array( 'title' => $data['pagetitle'] , 'query' => 'cat_ids='.$data['cat_ids'] , 'desc' => '' , 'category_title' => '' ) ;
-		} else {
-			$rss = array( 'title' => $data['forum']['title'] , 'query' => 'forum_id='.$data['forum']['id'] , 'desc' => $data['forum']['desc'] , 'category_title' => $data['category']['title'] ) ;
-		}
-		$xoopsTpl->assign( 'rss' , $rss ) ;
 	}
+		$xoopsTpl->assign( $data ) ;
+	if( empty( $_GET['forum_id'] ) ) {
+		$rss = array( 'title' => $data['pagetitle'] , 'query' => 'cat_ids='.$data['cat_ids'] , 'desc' => '' , 'category_title' => '' ) ;
+	} else {
+		$rss = array( 'title' => $data['forum']['title'] , 'query' => 'forum_id='.$data['forum']['id'] , 'desc' => $data['forum']['desc'] , 'category_title' => $data['category']['title'] ) ;
+	}
+	$xoopsTpl->assign( 'rss' , $rss ) ;
 	header( 'Content-Type:text/xml; charset=utf-8' ) ;
 	$xoopsTpl->display( 'db:'.$mydirname.'_independent_rss20_listtopics.html' ) ;
 	exit ;
