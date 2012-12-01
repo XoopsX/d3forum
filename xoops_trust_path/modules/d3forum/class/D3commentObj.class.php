@@ -12,7 +12,7 @@ public function __construct ($params )
 	$mytrustdirpath = dirname(dirname(__FILE__));
 	if( empty( $params['classname'] ) ) {
 		include_once $mytrustdirpath.'/class/D3commentAbstract.class.php' ;
-		$this->d3comObj = new D3commentAbstract( $forum_dirname , '' ) ;
+		$this->d3comObj = new D3commentAbstract( $params['forum_dirname'] , '' ) ;
 		return ;
 	}
 
