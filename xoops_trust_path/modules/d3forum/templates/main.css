@@ -227,6 +227,10 @@ h2.d3f_tree{
 
 /* d3f_form */
 
+div.d3f_form_base {
+	clear: both;
+}
+
 form.d3f_form p input{
 	vertical-align		:middle;}
 
@@ -490,6 +494,7 @@ ul.d3f_eachbranch {
 .d3f_wrap .itemFoot {
 	font-size:0.9em;
 	margin-bottom:4px;
+	clear: both;
 }
 
 .d3f_wrap .itemFoot + .itemHead {

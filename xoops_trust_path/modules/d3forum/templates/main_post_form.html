@@ -22,6 +22,8 @@
 </dl>
 <{/if}>
 
+<div class="d3f_form_base">
+
 <{include file="db:`$mydirname`_inc_d3comment_summary.html"}>
 
 <form name="postform" id="postform" action="<{$mod_url}>/index.php?page=post" method="post">
@@ -258,5 +260,7 @@ function d3forum_quote_message() {
 	<dd class="odd"><{$reference_message}></dd>
 </dl>
 <{/if}>
+
+</div><!-- div d3f_form_base close -->
 
 <!-- end module contents -->
