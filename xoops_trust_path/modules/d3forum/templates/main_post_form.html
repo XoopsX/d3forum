@@ -132,7 +132,7 @@
 						<{xoopsdhtmltarea name="message" cols="60" rows="15" value=$message pre_style="display:none;" post_style="display:none;"}>
 					<{/if}>
 				<{/if}>
-				<{if ($reference_quote && !$editor)}>
+				<{if ($reference_quote)}>
 					<br />
 					<input type="button" name="quote" id="quote" onclick="d3forum_quote_message();" value="<{$smarty.const._MD_D3FORUM_BTN_QUOTE}>" />
 				<{/if}>
