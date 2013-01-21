@@ -68,7 +68,11 @@ if( $mode != 'newtopic' ) {
 }
 
 // d3comment object
-if( ! empty( $forum_row['forum_external_link_format'] ) ) $d3com =& d3forum_main_get_comment_object( $mydirname , $forum_row['forum_external_link_format'] ) ;
+if( ! empty( $forum_row['forum_external_link_format'] ) ) {
+	$d3com =& d3forum_main_get_comment_object( $mydirname , $forum_row['forum_external_link_format'] ) ;
+} else {
+	$d3com = null;
+}
 
 // Permissions
 if( $mode == 'edit' ) {
