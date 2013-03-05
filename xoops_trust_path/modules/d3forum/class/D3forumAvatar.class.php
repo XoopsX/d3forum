@@ -17,10 +17,8 @@ class D3forumAvatar
 		$email = trim(strtolower($poster_obj->getVar('email')));
 		$rating = 'R'; //rating = the highest possible rating displayed image [ G | PG | R | X ]
 		$avatar_width = $avatar_height = 80;
-		$url = "http://www.gravatar.com/avatar/" . md5($email) . "?r=" . $rating . "&amp;s=" . $avatar_width;
 		self::$poster_avatar = array(
-			'url' => $url,
-			'path' => NULL,
+			'url' => "http://www.gravatar.com/avatar/" . md5($email) . "?r=" . $rating . "&amp;s=" . $avatar_width,
 			'width' => $avatar_width,
 			'height' => $avatar_height,
 			'type' => 1,
@@ -48,9 +46,10 @@ class D3forumAvatar
 	 * @param $poster_obj
 	 * @return array
 	 */
-	public static function getAvatar(&$poster_obj)
+	public static function &getAvatar(&$poster_obj)
 	{
-		if ($poster_obj->getVar('user_avatar') == "blank.gif") {
+		$root = XCube_Root::getSingleton();
+		if ($root->mContext->mModuleConfig['use_gravatar'] && $poster_obj->getVar('user_avatar') == "blank.gif") {
 			self::_getGravatar($poster_obj);
 		} else {
 			self::_getLocalAvatar($poster_obj);
