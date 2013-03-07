@@ -18,6 +18,7 @@ class D3forumAvatar
 		$rating = 'R'; //rating = the highest possible rating displayed image [ G | PG | R | X ]
 		$avatar_width = $avatar_height = 80;
 		self::$poster_avatar = array(
+			'path' => false,
 			'url' => "http://www.gravatar.com/avatar/" . md5($email) . "?r=" . $rating . "&amp;s=" . $avatar_width,
 			'width' => $avatar_width,
 			'height' => $avatar_height,
