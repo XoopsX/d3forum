@@ -21,9 +21,7 @@ class D3forumAvatar
 			'path' => false,
 			'url' => "http://www.gravatar.com/avatar/" . md5($email) . "?r=" . $rating . "&amp;s=" . $avatar_width,
 			'width' => $avatar_width,
-			'height' => $avatar_height,
-			'type' => 1,
-			'attr' => $rating
+			'height' => $avatar_height
 		);
 	}
 
@@ -32,13 +30,16 @@ class D3forumAvatar
 	 */
 	private function _getLocalAvatar(&$poster_obj){
 		if (is_file(XOOPS_UPLOAD_PATH . '/' . $poster_obj->getVar('user_avatar'))) {
-			list($avatar_width, $avatar_height, $avatar_type, $avatar_attr) = getimagesize(XOOPS_UPLOAD_PATH . '/' . $poster_obj->getVar('user_avatar'));
+			if ($poster_obj->getVar('user_avatar') == "blank.gif"){
+				$avatar_width = $avatar_height = 1;
+			}else{
+				$avatar_width = $avatar_height = 80;
+			}
 			self::$poster_avatar = array(
 				'path' => htmlspecialchars($poster_obj->getVar('user_avatar'), ENT_QUOTES),
+				'url' => false,
 				'width' => $avatar_width,
-				'height' => $avatar_height,
-				'type' => $avatar_type,
-				'attr' => $avatar_attr
+				'height' => $avatar_height
 			);
 		}
 	}

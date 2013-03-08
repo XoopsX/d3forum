@@ -4,7 +4,7 @@
 	<{if $post.poster_uid != 0}>
 		<a href="<{$xoops_url}>/userinfo.php?uid=<{$post.poster_uid}>" title="<{$post.poster_uname}>">
 	<{/if}>
-	<{if $post.poster_avatar.path }>
+	<{if $post.poster_avatar.path}>
 		<{if $post.poster_avatar.height > 80}>
 			<img src="<{$xoops_upload_url}>/<{$post.poster_avatar.path}>" height="80" alt="<{$post.poster_uname}>" class="d3f_avatar"/>
 		<{elseif $post.poster_avatar.width > 1}>
