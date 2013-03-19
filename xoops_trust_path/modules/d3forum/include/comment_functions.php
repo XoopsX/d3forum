@@ -105,7 +105,7 @@ function d3forum_display_comment( $mydirname , $forum_id , $params )
 		
 		$m_params['forum_dirname'] = $mydirname ;
 		$m_params['external_dirname'] = $external_dirname ;
-		$m_params['class_name'] = $class_name ;
+		$m_params['classname'] = $class_name ;
 		$m_params['external_trustdirname'] = $external_trustdirname  ;
 
 		if( class_exists( $class_name ) ) {
