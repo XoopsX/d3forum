@@ -694,7 +694,7 @@ function d3forum_transact_make_post_history( $mydirname , $post_id , $full_backu
 		if( $old_data == $data ) return ;
 	}
 
-	if( ! $db->queryF( "INSERT INTO ".$db->prefix($mydirname."_post_histories")." SET post_id=$post_id, history_time=UNIX_TIMESTAMP(), data='".mysql_real_escape_string( serialize( $data ) )."'" ) ) die( "DB ERROR ON making post_history".__LINE__ ) ;
+	if( ! $db->queryF( "INSERT INTO ".$db->prefix($mydirname."_post_histories")." SET post_id=$post_id, history_time=UNIX_TIMESTAMP(), data=".$db->quoteString( serialize( $data ) ) ) ) die( "DB ERROR ON making post_history".__LINE__ ) ;
 }
 
 

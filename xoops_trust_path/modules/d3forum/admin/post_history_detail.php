@@ -13,7 +13,7 @@ if( empty( $data ) ) exit ;
 
 $sql = 'INSERT INTO '.$db->prefix($mydirname.'_posts').' SET '."\n" ;
 foreach( $data as $key => $val ) {
-	$sql .= "`$key`='".mysql_real_escape_string($val)."',\n" ;
+	$sql .= "`$key`=".$db->quoteString($val).",\n" ;
 }
 $sql = substr( $sql , 0 , -2 ) . ';' ;
 
