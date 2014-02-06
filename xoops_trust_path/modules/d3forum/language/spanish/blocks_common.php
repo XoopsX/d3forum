@@ -8,7 +8,7 @@ define("_MB_D3FORUM_MARKISUP","Temas marcados primero");
 define("_MB_D3FORUM_ORDERRULE","Ordenar por"); 
 define("_MB_D3FORUM_CATLIMIT","Especificar categorías");
 define("_MB_D3FORUM_FORUMLIMIT","Especificar foros");
-define("_MB_D3FORUM_CATLIMITDSC","Escriba la 'id' de cada categoría separada con una coma. Tenga en cuenta que esta especificación no se aplica recursivamente y dejar la caja de texto en blanco equivale a elegir todas las categorías.");
+define("_MB_D3FORUM_CATLIMITDSC","Escriba la 'id' de cada categoría separada con una coma. Tenga en cuenta que esta especificación no se aplica recursivamente y dejar la caja de texto en blanco equivale a elegir todas las categorías. `auto` significa la categoría actual.");
 define("_MB_D3FORUM_FORUMLIMITDSC","Como se especificaron las categorías");
 define("_MB_D3FORUM_THISTEMPLATE","Plantilla");
 

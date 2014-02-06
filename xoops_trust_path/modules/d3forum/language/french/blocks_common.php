@@ -7,7 +7,7 @@ define("_MB_D3FORUM_MARKISUP","Les sujets marqués sont prioritaires");
 define("_MB_D3FORUM_ORDERRULE","Trier par"); 
 define("_MB_D3FORUM_CATLIMIT","Specifier Catégories");
 define("_MB_D3FORUM_CATLIMITDSC","Ajouter l'ID des Catégories separé par une virgule. Noter que cette option n'est pas  	
-appliquée de manière séquentielle. Le champ vide l'applique à toutes catégories.");
+appliquée de manière séquentielle. Le champ vide l'applique à toutes catégories. `auto` signifie catégorie actuelle.");
 define('_MB_D3FORUM_FORUMLIMIT','Spécifier les forums');
 define('_MB_D3FORUM_FORUMLIMITDSC','Pareil que les catégories spécifiées');
 

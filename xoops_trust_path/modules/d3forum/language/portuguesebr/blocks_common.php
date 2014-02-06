@@ -11,7 +11,7 @@ define("_MB_D3FORUM_MARKISUP","Tópicos marcados estão em cima");
 define("_MB_D3FORUM_ORDERRULE","Classificado por");
 define("_MB_D3FORUM_CATLIMIT","Especificar categorias");
 define("_MB_D3FORUM_FORUMLIMIT","Especificar forums");
-define("_MB_D3FORUM_CATLIMITDSC","Digite os códigos identificadores - ID - separados por vírgulas. Note que esta especificação não se aplica recursivamente. Em branco indica todas as categorias.");
+define("_MB_D3FORUM_CATLIMITDSC","Digite os códigos identificadores - ID - separados por vírgulas. Note que esta especificação não se aplica recursivamente. Em branco indica todas as categorias.  `auto` significa categoria atual.");
 define("_MB_D3FORUM_FORUMLIMITDSC","Mesmo que a especificação da categoria");
 define("_MB_D3FORUM_THISTEMPLATE","Template");
 define("_MB_D3FORUM_ORDERTIMED","Mais novo em primeiro");

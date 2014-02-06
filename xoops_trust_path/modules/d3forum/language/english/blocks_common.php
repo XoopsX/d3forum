@@ -7,7 +7,7 @@ define("_MB_D3FORUM_MARKISUP","Marked topics are upper");
 define("_MB_D3FORUM_ORDERRULE","Sorted by"); 
 define("_MB_D3FORUM_CATLIMIT","Specify categories");
 define("_MB_D3FORUM_FORUMLIMIT","Specify forums");
-define("_MB_D3FORUM_CATLIMITDSC","Input category's id separated with comma. Note this specification is not applied recursively. Blank means all categories.");
+define("_MB_D3FORUM_CATLIMITDSC","Input category's id separated with comma. Note this specification is not applied recursively. Blank means all categories. `auto` means current category.");
 define("_MB_D3FORUM_FORUMLIMITDSC","Same as category speification");
 define("_MB_D3FORUM_THISTEMPLATE","Template");
 
