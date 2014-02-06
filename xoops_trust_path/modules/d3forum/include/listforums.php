@@ -104,6 +104,11 @@ while( $forum_row = $db->fetchArray( $frs ) ) {
 	) ;
 }
 
+// assign for block function
+$GLOBALS['D3forum_'.$mydirname] = array(
+	'category' => $category4assign
+);
+
 $xoopsOption['template_main'] = $mydirname.'_main_listforums.html' ;
 include XOOPS_ROOT_PATH.'/header.php' ;
 

@@ -209,6 +209,13 @@ if( $topic4assign['external_link_id'] >0 ) {
 }
 	// naao to
 
+// assign for block function
+$GLOBALS['D3forum_'.$mydirname] = array(
+	'category' => $category4assign,
+	'forum' => $forum4assign,
+	'topic' => $topic4assign
+);
+
 $xoopsOption['template_main'] = $mydirname.'_main_listposts.html' ;
 include XOOPS_ROOT_PATH.'/header.php' ;
 
