@@ -10,6 +10,11 @@ private $dictionary_cache = array() ;
 
 private $dictionary_file; 
 
+public function __construct()
+{
+	$this->setVar('dictionary_file', 'AntispamJapaneseDictionary.txt');
+}
+
 function getKanaKanji( $time = null )
 {
 	if( empty( $time ) ) $time = time() ;
