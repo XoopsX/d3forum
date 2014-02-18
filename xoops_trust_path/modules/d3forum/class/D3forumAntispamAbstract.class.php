@@ -34,12 +34,29 @@ function isMobile()
 		// WizMobile (gusagi)
 		$user =& Wizin_User::getSingleton();
 		return $user->bIsMobile ;
-	} else if( defined( 'HYP_K_TAI_RENDER' ) && HYP_K_TAI_RENDER ) {
+	} else if( defined( 'HYP_K_TAI_RENDER' ) && HYP_K_TAI_RENDER && HYP_K_TAI_RENDER != 2 ) {
 		// hyp_common ktai-renderer (nao-pon)
 		return true ;
 	} else {
 		return false ;
 	}
+}
+
+public function setVar( $key , $val )
+{
+	if (property_exists($this, $key)) {
+		$this->$key = $val;
+		return true;
+	}
+	return false;
+}
+
+public function getVar( $key )
+{
+	if (property_exists($this, $key)) {
+		return $this->$key;
+	}
+	return null;
 }
 
 }
