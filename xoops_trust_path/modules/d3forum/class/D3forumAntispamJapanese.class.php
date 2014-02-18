@@ -6,19 +6,21 @@ require_once dirname(__FILE__).'/D3forumAntispamAbstract.class.php' ;
 
 class D3forumAntispamJapanese extends D3forumAntispamAbstract {
 
-var $dictionary_cache = array() ;
+private $dictionary_cache = array() ;
+
+private $dictionary_file; 
 
 function getKanaKanji( $time = null )
 {
 	if( empty( $time ) ) $time = time() ;
 	
-	if( empty( $this->dictionary_cache ) ) {
+	if( !isset( $this->dictionary_cache[$this->dictionary_file] ) ) {
 		// SKK EUC dictionary
-		$lines = file( dirname( __FILE__ ) . '/AntispamJapaneseDictionary.txt' ) ;
+		$lines = file( $this->dictionary_file ) ;
 		foreach( $lines as $line ) {
 			$line = mb_convert_encoding( $line , mb_internal_encoding() , 'EUC-JP' ) ;
 			if( preg_match( '#(.+) /(.+)/#' , $line , $regs ) ) {
-				$this->dictionary_cache[] = array(
+				$this->dictionary_cache[$this->dictionary_file][] = array(
 					'yomigana' => $regs[1] ,
 					'kanji' => $regs[2] ,
 				) ;
@@ -26,10 +28,10 @@ function getKanaKanji( $time = null )
 		}
 	}
 	
-	$size = sizeof( $this->dictionary_cache ) ;
+	$size = sizeof( $this->dictionary_cache[$this->dictionary_file] ) ;
 	$ret = array() ;
 	for( $i = 0 ; $i < 3 ; $i ++ ) {
-		$ret[] = $this->dictionary_cache[ abs( crc32( md5( gmdate( 'YmdH' , $time ) . XOOPS_DB_PREFIX . XOOPS_DB_NAME . $i ) ) ) % $size ] ;
+		$ret[] = $this->dictionary_cache[$this->dictionary_file][ abs( crc32( md5( gmdate( 'YmdH' , $time ) . XOOPS_DB_PREFIX . XOOPS_DB_NAME . $i ) ) ) % $size ] ;
 	}
 
 	return $ret ;
@@ -66,6 +68,29 @@ function checkValidate()
 
 	$this->errors[] = _MD_D3FORUM_ERR_JAPANESEINCORRECT ;
 	return false ;
+}
+
+private function setDictionary( $file )
+{
+	if ( $file[0] !== '/' ) {
+		$file = dirname( __FILE__ ) . '/' . $file;
+	}
+	if ( is_readable($file) ) {
+		$this->dictionary_file = $file ;
+		return true;
+	}
+	return false;
+}
+
+public function setVar( $key , $val )
+{
+	if ($key === 'dictionary_file') {
+		if ( !$val || !$this->setDictionary( $val ) ) {
+			$this->setDictionary( 'AntispamJapaneseDictionary.txt' );
+		}
+	} else {
+		parent::setVar( $key , $val );
+	}
 }
 
 }
