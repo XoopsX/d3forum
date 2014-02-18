@@ -194,13 +194,37 @@ function b_d3forum_list_topics_show( $options )
 	require_once dirname(dirname(__FILE__)).'/include/common_functions.php' ;
 	$whr_forum = "t.forum_id IN (".implode(",",d3forum_get_forums_can_read( $mydirname )).")" ;
 
+	// check option "auto" by nao-pon
+	$_hasAuto = false;
+	$_globalKey = 'D3forum_'.$mydirname;
+	$categories = array_map( 'b_d3forum_check_limits' , $categories ) ;
+	if ( $categories && false !== ($_key = array_search('auto', $categories)) ) {
+		$_hasAuto = true;
+ 		if (isset( $GLOBALS[$_globalKey]) && isset( $GLOBALS[$_globalKey]['category']) ) {
+			$categories[$_key] = $GLOBALS[$_globalKey]['category']['id'];
+		} else {
+			unset( $categories[$_key]);
+		}
+	}
+	$forums = array_map( 'b_d3forum_check_limits' , $forums ) ;
+	if ($forums && false !== ($_key = array_search('auto', $forums))) {
+		$_hasAuto = true;
+		if (isset( $GLOBALS[$_globalKey] ) && isset( $GLOBALS[$_globalKey]['forum']) ) {
+			$forums[$_key] = $GLOBALS[$_globalKey]['forum']['id'];
+		} else {
+			unset( $forums[$_key] );
+		}
+	}
+	if ( $_hasAuto && !$categories && !$forums ) {
+		// disables this block
+		return false;
+	}
+
 	// categories
-	$categories = array_map( 'intval' , $categories ) ;
 	$categories4assign = implode(',',$categories) ;
 	$whr_categories = empty( $categories ) ? '1' : 'f.cat_id IN ('.implode(',',$categories).')' ;
 
 	// forums
-	$forums = array_map( 'intval' , $forums ) ;
 	$forums4assign = implode(',',$forums) ;
 	$whr_forums = empty( $forums ) ? '1' : 'f.forum_id IN ('.implode(',',$forums).')' ;
 
@@ -337,8 +361,8 @@ function b_d3forum_list_topics_edit( $options )
 		$markupyes_checked = "" ;
 	}
 
-	$categories = array_map( 'intval' , $categories ) ;
-	$forums = array_map( 'intval' , $forums ) ;
+	$categories = array_map( 'b_d3forum_check_limits' , $categories ) ;
+	$forums = array_map( 'b_d3forum_check_limits' , $forums ) ;
 
 	$orders = array(
 		'time' => _MB_D3FORUM_ORDERTIMED ,
@@ -446,13 +470,37 @@ function b_d3forum_list_posts_show( $options )
 	require_once dirname(dirname(__FILE__)).'/include/common_functions.php' ;
 	$whr_forum = "t.forum_id IN (".implode(",",d3forum_get_forums_can_read( $mydirname )).")" ;
 
+	// check option "auto" by nao-pon
+	$_hasAuto = false;
+	$_globalKey = 'D3forum_'.$mydirname;
+	$categories = array_map( 'b_d3forum_check_limits' , $categories ) ;
+	if ( $categories && false !== ($_key = array_search('auto', $categories)) ) {
+		$_hasAuto = true;
+ 		if (isset( $GLOBALS[$_globalKey]) && isset( $GLOBALS[$_globalKey]['category']) ) {
+			$categories[$_key] = $GLOBALS[$_globalKey]['category']['id'];
+		} else {
+			unset( $categories[$_key]);
+		}
+	}
+	$forums = array_map( 'b_d3forum_check_limits' , $forums ) ;
+	if ($forums && false !== ($_key = array_search('auto', $forums))) {
+		$_hasAuto = true;
+		if (isset( $GLOBALS[$_globalKey] ) && isset( $GLOBALS[$_globalKey]['forum']) ) {
+			$forums[$_key] = $GLOBALS[$_globalKey]['forum']['id'];
+		} else {
+			unset( $forums[$_key] );
+		}
+	}
+	if ( $_hasAuto && !$categories && !$forums ) {
+		// disables this block
+		return false;
+	}
+
 	// categories
-	$categories = array_map( 'intval' , $categories ) ;
 	$categories4assign = implode(',',$categories) ;
 	$whr_categories = empty( $categories ) ? '1' : 'f.cat_id IN ('.implode(',',$categories).')' ;
 
 	// forums
-	$forums = array_map( 'intval' , $forums ) ;
 	$forums4assign = implode(',',$forums) ;
 	$whr_forums = empty( $forums ) ? '1' : 'f.forum_id IN ('.implode(',',$forums).')' ;
 
@@ -548,8 +596,8 @@ function b_d3forum_list_posts_edit( $options )
 
 	if( preg_match( '/[^0-9a-zA-Z_-]/' , $mydirname ) ) die( 'Invalid mydirname' ) ;
 
-	$categories = array_map( 'intval' , $categories ) ;
-	$forums = array_map( 'intval' , $forums ) ;
+	$categories = array_map( 'b_d3forum_check_limits' , $categories ) ;
+	$forums = array_map( 'b_d3forum_check_limits' , $forums ) ;
 
 	$orders = array(
 		'time' => _MB_D3FORUM_ORDERTIMED ,
@@ -584,6 +632,12 @@ function b_d3forum_list_posts_edit( $options )
 	\n" ;
 
 	return $form;
+}
+
+
+function b_d3forum_check_limits( $var )
+{
+	return ( trim( strtolower( $var ) ) !== 'auto' )? intval( $var ) : 'auto';
 }
 
 // get object for comment integration

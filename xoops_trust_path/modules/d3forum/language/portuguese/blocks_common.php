@@ -11,7 +11,7 @@ define("_MB_D3FORUM_DISPLAYF","Mostrar com tamanho completo");
 define("_MB_D3FORUM_MARKISUP","Tópicos marcados estão em cima");
 define("_MB_D3FORUM_ORDERRULE","Classificado por");
 define("_MB_D3FORUM_CATLIMIT","Especificar categorias");
-define("_MB_D3FORUM_CATLIMITDSC","Escreva os códigos identificadores - ID - separados por vírgulas. Note que esta especificação não se aplica recursivamente. Em branco indica todas as categorias.");
+define("_MB_D3FORUM_CATLIMITDSC","Escreva os códigos identificadores - ID - separados por vírgulas. Note que esta especificação não se aplica recursivamente. Em branco indica todas as categorias.  `auto` significa categoria atual.");
 define("_MB_D3FORUM_THISTEMPLATE","Modelo");
 define("_MB_D3FORUM_ORDERTIMED","Mais novo em primeiro");
 define("_MB_D3FORUM_ORDERVIEWSD","Mais visto em primeiro");

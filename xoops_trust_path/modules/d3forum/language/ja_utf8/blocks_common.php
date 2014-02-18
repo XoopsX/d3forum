@@ -7,7 +7,7 @@ define("_MB_D3FORUM_MARKISUP","チェックしたトピックの優先表示");
 define("_MB_D3FORUM_ORDERRULE","表示順"); 
 define("_MB_D3FORUM_CATLIMIT","カテゴリーを指定する");
 define("_MB_D3FORUM_FORUMLIMIT","フォーラムを指定する");
-define("_MB_D3FORUM_CATLIMITDSC","※表示するカテゴリー番号をカンマ(,)で区切る。サブカテゴリーは含まないことに注意（必要なら、各サブカテゴリーを明示的に指定すること）。空欄なら全カテゴリー。");
+define("_MB_D3FORUM_CATLIMITDSC","※表示するカテゴリー番号をカンマ(,)で区切る。サブカテゴリーは含まないことに注意（必要なら、各サブカテゴリーを明示的に指定すること）。空欄なら全カテゴリー。「auto」を指定するとページ表示中のカテゴリー番号となる。");
 define("_MB_D3FORUM_FORUMLIMITDSC","※カテゴリー指定と同様");
 define("_MB_D3FORUM_THISTEMPLATE","このブロックのテンプレート");
 

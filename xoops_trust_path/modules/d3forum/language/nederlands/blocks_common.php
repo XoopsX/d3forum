@@ -7,7 +7,7 @@ define("_MB_D3FORUM_MARKISUP","Gemarkeerde onderwerpen bovenaan");
 define("_MB_D3FORUM_ORDERRULE","Gesorteerd op"); 
 define("_MB_D3FORUM_CATLIMIT","Toon categori&euml;n");
 define("_MB_D3FORUM_FORUMLIMIT","Toon fora");
-define("_MB_D3FORUM_CATLIMITDSC","Voer categorie ID's in gescheiden door een comma (onderliggende categori&euml;n worden niet autmatisch meegenomen). Laat het veld leeg om alle categori&euml;n te tonen.");
+define("_MB_D3FORUM_CATLIMITDSC","Voer categorie ID's in gescheiden door een comma (onderliggende categori&euml;n worden niet autmatisch meegenomen). Laat het veld leeg om alle categori&euml;n te tonen. `auto` betekent de huidige categorie.");
 define("_MB_D3FORUM_FORUMLIMITDSC","Zelfde als bij categorie ID's");
 define("_MB_D3FORUM_THISTEMPLATE","Template");
 
