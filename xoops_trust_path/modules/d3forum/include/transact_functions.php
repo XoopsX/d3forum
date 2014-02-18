@@ -730,10 +730,19 @@ function d3forum_transact_htmlpurify( $text )
 		require_once XOOPS_TRUST_PATH.'/modules/protector/library/HTMLPurifier.auto.php' ;
 		$config = HTMLPurifier_Config::createDefault();
 		$config->set('Cache', 'SerializerPath', XOOPS_TRUST_PATH.'/modules/protector/configs');
-		$config->set('Core', 'Encoding', _CHARSET);
+		$config->set('Core', 'Encoding', 'UTF-8');
 		//$config->set('HTML', 'Doctype', 'HTML 4.01 Transitional');
+		if ( $_conv = (_CHARSET !== 'UTF-8') ) {
+			$_substitute = mb_substitute_character();
+			mb_substitute_character('none');
+			$text = mb_convert_encoding($text, 'UTF-8', _CHARSET);
+		}
 		$purifier = new HTMLPurifier($config);
 		$text = $purifier->purify( $text ) ;
+		if ( $_conv ) {
+			$text = mb_convert_encoding($text, _CHARSET, 'UTF-8');
+			mb_substitute_character($_substitute);
+		}
 	}
 	return $text ;
 }
