@@ -309,6 +309,7 @@ ul.d3f_eachbranch li img{
 .d3f_eachbranch li.d3f_currenttopic > span,
 .d3f_eachbranch li.d3f_currenttopic > span a{
 	color				:<{$color.d3f_bottom_tree_current}>;}
+td span.d3f_currenttopic:after,
 .d3f_eachbranch li.d3f_currenttopic > span:first-child:after {
 	content: "\00ab";
 	color: <{$color.d3f_bottom_tree_current_mk}>;

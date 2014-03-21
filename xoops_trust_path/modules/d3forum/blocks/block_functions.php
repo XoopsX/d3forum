@@ -220,6 +220,13 @@ function b_d3forum_list_topics_show( $options )
 		return false;
 	}
 
+	// topic ( with out current topic )
+	$current_topic_id = ( isset( $GLOBALS[$_globalKey]) && isset( $GLOBALS[$_globalKey]['topic']) )? intval($GLOBALS[$_globalKey]['topic']['id']) : 0;
+	$whr_topic = '1';
+	if (isset( $GLOBALS[$_globalKey]) && isset( $GLOBALS[$_globalKey]['topic']) ) {
+		//$whr_topic = 't.topic_id != '.intval($GLOBALS[$_globalKey]['topic']['id']);
+	}
+
 	// categories
 	$categories4assign = implode(',',$categories) ;
 	$whr_categories = empty( $categories ) ? '1' : 'f.cat_id IN ('.implode(',',$categories).')' ;
@@ -240,7 +247,7 @@ function b_d3forum_list_topics_show( $options )
 			.$db->prefix($mydirname."_posts")." p ON t.topic_last_post_id=p.post_id LEFT JOIN "
 			.$db->prefix($mydirname."_users2topics")." u2t ON u2t.topic_id=t.topic_id AND u2t.uid=$uid 
 			WHERE ! t.topic_invisible AND ($whr_forum) AND ($whr_categories) AND ($whr_forums) 
-			AND ($whr_order) ORDER BY u2t.u2t_marked<=>1 DESC , $odr" ;
+			AND ($whr_topic) AND ($whr_order) ORDER BY u2t.u2t_marked<=>1 DESC , $odr" ;
 	} else {
 		$sql = "SELECT t.topic_id, t.topic_title, t.topic_last_uid, t.topic_last_post_id, t.topic_last_post_time, 
 			t.topic_views, t.topic_votes_count, t.topic_votes_sum, t.topic_posts_count, t.topic_external_link_id, 
@@ -251,7 +258,7 @@ function b_d3forum_list_topics_show( $options )
 			.$db->prefix($mydirname."_forums")." f ON f.forum_id=t.forum_id LEFT JOIN "
 			.$db->prefix($mydirname."_posts")." p ON t.topic_last_post_id=p.post_id 
 			 WHERE ! t.topic_invisible AND ($whr_forum) AND ($whr_categories) AND ($whr_forums) 
-			 AND ($whr_order) ORDER BY $odr" ;
+			 AND ($whr_topic) AND ($whr_order) ORDER BY $odr" ;
 	}
 	// naao to
 //	var_dump( $sql ) ;
@@ -268,6 +275,7 @@ function b_d3forum_list_topics_show( $options )
 		'categories' => $categories4assign ,
 		'forums' => $forums4assign ,
 		'full_view' => $show_fullsize ,
+		'current_topic_id' => $current_topic_id,
 		'lang_forum' => constant($constpref.'_FORUM') ,
 		'lang_topic' => constant($constpref.'_TOPIC') ,
 		'lang_replies' => constant($constpref.'_REPLIES') ,
