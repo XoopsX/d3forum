@@ -7,6 +7,7 @@ $colors = array(
 	'd3f_tree_indicator'			=> '#d0d0d0' ,
 	'd3f_bottom_tree_bg'			=> '#eeeeee' ,
 	'd3f_bottom_tree_current'		=> '#990000' ,
+	'd3f_bottom_tree_current_mk'	=> '#ff0000' ,
 	'd3f_bottom_tree_current_bg'	=> '#ffffff' ,
 	'd3f_head'					=> '#ffffff' ,
 	'd3f_head_bg'					=> '#778899' ,
@@ -308,6 +309,14 @@ ul.d3f_eachbranch li img{
 .d3f_eachbranch li.d3f_currenttopic > span,
 .d3f_eachbranch li.d3f_currenttopic > span a{
 	color				:<{$color.d3f_bottom_tree_current}>;}
+.d3f_eachbranch li.d3f_currenttopic > span:first-child:after {
+	content: "\00ab";
+	color: <{$color.d3f_bottom_tree_current_mk}>;
+	font-weight: bold;
+}
+.d3f_eachbranch li.d3f_currenttopic > span.d3f_thistopic {
+	color: <{$color.d3f_bottom_tree_current_mk}>;
+}
 
 /* main_listforums.html */
 /* d3f_subcategories */
@@ -472,7 +481,7 @@ div.boxNavi .itemBody li.this span {
 	border:dotted 1px #cccccc;
 }
 
-h2.head, ul.d3f_eachbranch {
+h2.head {
 	width:98%;
 	margin:0 auto;
 	padding:4px 4px 0;
@@ -480,11 +489,6 @@ h2.head, ul.d3f_eachbranch {
 
 .d3f_order_ctrl + h2.head {
 	margin:1em 0 0;
-}
-
-
-ul.d3f_eachbranch {
-	padding:0  4px 4px;
 }
 
 .d3f_wrap .itemInfo {
