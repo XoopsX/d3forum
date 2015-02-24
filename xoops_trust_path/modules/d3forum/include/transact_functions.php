@@ -724,7 +724,7 @@ function d3forum_transact_turnsolvedon_in_forum( $mydirname , $forum_id )
 
 
 // return purified HTML
-function d3forum_transact_htmlpurify( $text )
+function d3forum_transact_htmlpurify( $text , $mydirname )
 {
 	if( substr( PHP_VERSION , 0 , 1 ) != 4 && file_exists( XOOPS_TRUST_PATH.'/modules/protector/library/HTMLPurifier.auto.php' ) ) {
 		require_once XOOPS_TRUST_PATH.'/modules/protector/library/HTMLPurifier.auto.php' ;
@@ -736,6 +736,12 @@ function d3forum_transact_htmlpurify( $text )
 			$_substitute = mb_substitute_character();
 			mb_substitute_character('none');
 			$text = mb_convert_encoding($text, 'UTF-8', _CHARSET);
+		}
+		// lazy registering & call "(dirname).Transact.PreHTMLPurifier" delegate
+		if ( defined( 'XOOPS_CUBE_LEGACY' ) ) {
+			$delegate = new XCube_Delegate();
+			$delegate->register( ucfirst( $mydirname ) . '.Transact.PreHTMLPurifier' );
+			$delegate->call( new XCube_Ref( $config ) , new XCube_Ref( $text ) );
 		}
 		$purifier = new HTMLPurifier($config);
 		$text = $purifier->purify( $text ) ;

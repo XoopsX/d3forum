@@ -129,7 +129,7 @@ if( empty( $xoopsModuleConfig['allow_html'] ) ) $html = 0 ;
 if( empty( $xoopsModuleConfig['allow_sig'] ) ) $allow_sig = 0 ;
 $hide_uid = ! empty( $_POST['hide_uid'] ) && ! empty( $xoopsModuleConfig['allow_hideuid'] ) && $uid ? 1 : 0 ;
 $message = $myts->censorString( $message ) ;
-if( $html ) $message = d3forum_transact_htmlpurify( $message ) ;
+if( $html ) $message = d3forum_transact_htmlpurify( $message , $mydirname ) ;
 
 // Validate message
 $preview_message4html = $myts->displayTarea( $message , $html , $smiley , $xcode , @$xoopsModuleConfig['allow_textimg'] , $br , 0 , $number_entity , $special_entity ) ;
