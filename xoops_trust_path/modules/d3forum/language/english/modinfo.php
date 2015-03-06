@@ -80,7 +80,8 @@ define($constpref.'_ANTISPAM_GROUPS','Groups should be checked anti-SPAM');
 define($constpref.'_ANTISPAM_GROUPSDSC','Usually set all blank.');
 define($constpref.'_ANTISPAM_CLASS','Class name of anti-SPAM');
 define($constpref.'_ANTISPAM_CLASSDSC','Default value is "default". If you disable anti-SPAM against guests even, set it blank');
-
+define($constpref.'_USE_GRAVATAR','Use Gravatar');
+define($constpref.'_USE_GRAVATARDSC','Use gravatar.com for unregistered image by user');
 
 // Notify Categories
 define($constpref.'_NOTCAT_TOPIC', 'This topic'); 

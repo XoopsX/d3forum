@@ -357,7 +357,15 @@ $modversion['config'][] = array(
 	'options'		=> array()
 ) ;
 
-
+$modversion['config'][] = array(
+	'name'			=> 'use_gravatar' ,
+	'title'			=> $constpref.'_USE_GRAVATAR' ,
+	'description'	=> $constpref.'_USE_GRAVATARDSC' ,
+	'formtype'		=> 'yesno' ,
+	'valuetype'		=> 'int' ,
+	'default'		=> 1 ,
+	'options'		=> array()
+) ;
 
 // Notification
 $modversion['hasNotification'] = 1;

@@ -1,4 +1,5 @@
 <?php
+	include_once(dirname(dirname(__FILE__))."/class/D3forumAvatar.class.php");
 
 	// can_vote
 	$can_vote = ( ($uid || $xoopsModuleConfig['guest_vote_interval']) && $xoopsModuleConfig['use_vote'] == 1 ) ? true : false ;
@@ -34,21 +35,8 @@
 		$poster_rank_image4disp = htmlspecialchars( @$poster_rank['image'] , ENT_QUOTES ) ;
 		$poster_is_online = $poster_obj->isOnline() ;
 		$poster_posts_count = intval( $poster_obj->getVar( 'posts' ) ) ;
-
 		// avatar
-		if( is_file( XOOPS_UPLOAD_PATH.'/'.$poster_obj->getVar( 'user_avatar' ) ) ) {
-			list( $avatar_width , $avatar_height , $avatar_type , $avatar_attr ) = getimagesize( XOOPS_UPLOAD_PATH.'/'.$poster_obj->getVar( 'user_avatar' ) ) ;
-			$poster_avatar = array(
-				'path' => htmlspecialchars( $poster_obj->getVar( 'user_avatar' ) , ENT_QUOTES ) ,
-				'width' => $avatar_width ,
-				'height' => $avatar_height ,
-				'type' => $avatar_type ,
-				'attr' => $avatar_attr ,
-			) ;
-		} else {
-			$poster_avatar = array() ;
-		}
-
+		$poster_avatar = D3forumAvatar::getAvatar($poster_obj);
 		// signature
 		if( $xoopsModuleConfig['allow_sig'] && $post_row['attachsig'] ) {
 			$signature4disp = $myts->displayTarea( $poster_obj->getVar('user_sig', 'N'), 0, 1, 1, $xoopsModuleConfig['allow_sigimg'] ) ;

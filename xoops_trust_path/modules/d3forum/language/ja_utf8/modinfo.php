@@ -80,7 +80,8 @@ define($constpref.'_ANTISPAM_GROUPS','SPAM投稿チェックを行うグルー�
 define($constpref.'_ANTISPAM_GROUPSDSC','通常は全て未選択です。SPAM投稿チェックを行うべきグループがある場合のみ選択してください。');
 define($constpref.'_ANTISPAM_CLASS','SPAM投稿チェック用クラス');
 define($constpref.'_ANTISPAM_CLASSDSC','デフォルトは default です。ゲストについてもSPAM投稿チェックを行わない場合はここを空欄にします。');
-
+define($constpref.'_USE_GRAVATAR','Gravatarを使う');
+define($constpref.'_USE_GRAVATARDSC','アバター未登録ユーザーのアバター表示に gravator.com のアバターを適用する。');
 
 // Notify Categories
 define($constpref.'_NOTCAT_TOPIC', '表示中のトピック'); 
