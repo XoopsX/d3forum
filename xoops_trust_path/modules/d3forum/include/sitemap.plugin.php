@@ -3,7 +3,7 @@
 function b_sitemap_d3forum( $mydirname )
 {
 	$db =& Database::getInstance();
-	$myts =& MyTextSanitizer::getInstance();
+	(method_exists('MyTextSanitizer', 'sGetInstance') and $myts =& MyTextSanitizer::sGetInstance()) || $myts =& MyTextSanitizer::getInstance();
 	$ret = array();
 
 	include_once dirname(__FILE__).'/common_functions.php' ;
