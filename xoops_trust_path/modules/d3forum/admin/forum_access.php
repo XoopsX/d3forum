@@ -4,7 +4,7 @@ require_once dirname(dirname(__FILE__)).'/include/main_functions.php' ;
 require_once dirname(dirname(__FILE__)).'/include/common_functions.php' ;
 require_once dirname(dirname(__FILE__)).'/class/d3forum.textsanitizer.php' ;
 require_once dirname(dirname(__FILE__)).'/class/gtickets.php' ;
-$myts =& D3forumTextSanitizer::getInstance() ;
+$myts =& D3forumTextSanitizer::sGetInstance() ;
 $db =& Database::getInstance() ;
 
 // get right $forum_id

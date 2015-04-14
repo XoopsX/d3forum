@@ -3,7 +3,7 @@
 require_once dirname(__FILE__).'/main_functions.php' ;
 require_once dirname(__FILE__).'/common_functions.php' ;
 require_once dirname(dirname(__FILE__)).'/class/d3forum.textsanitizer.php' ;
-$myts =& D3forumTextSanitizer::getInstance() ;
+$myts =& D3forumTextSanitizer::sGetInstance() ;
 $db =& Database::getInstance() ;
 
 // GET $uid

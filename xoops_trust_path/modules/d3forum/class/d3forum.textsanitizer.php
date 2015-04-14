@@ -11,12 +11,18 @@ class D3forumTextSanitizer extends MyTextSanitizer
 		parent::__construct() ;
 	}
 
-	function &getInstance()
+	static public function &sGetInstance()
 	{
 		static $instance;
 		if (!isset($instance)) {
 			$instance = new D3forumTextSanitizer();
 		}
+		return $instance;
+	}
+	
+	function &getInstance()
+	{
+		$instance =& self::sGetInstance();
 		return $instance;
 	}
 
