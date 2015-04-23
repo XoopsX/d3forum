@@ -187,7 +187,7 @@ $xoopsTpl->assign(
 		'pagenav' => @$pagenav ,
 		'page' => 'listtopics_over_categories' ,
 		'pagetitle' => $pagetitle ,
-		'xoops_pagetitle' => join(' - ', array($pagetitle, $category4assign['title'], $xoopsModule->getVar('name'))) ,
+		'xoops_pagetitle' => join(' - ', array_filter(array($pagetitle, isset($category4assign['title'])? $category4assign['title'] : '', $xoopsModule->getVar('name')))) ,
 	)
 ) ;
 
