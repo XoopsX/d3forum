@@ -1,6 +1,10 @@
 <?php
 
 
+
+// Appended by Xoops Language Checker -GIJOE- in 2015-04-24 14:09:51
+define('_MD_D3FORUM_THIS_TOPIC','# THIS TOPIC');
+
 // Appended by Xoops Language Checker -GIJOE- in 2009-01-19 05:36:18
 define('_MD_D3FORUM_HISTORIES','Histories');
 define('_MD_D3FORUM_LINK_TOPICHISTORIES','Refer histries about this topic');

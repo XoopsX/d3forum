@@ -80,6 +80,10 @@ define($constpref.'_ANTISPAM_GROUPS','Groups should be checked anti-SPAM');
 define($constpref.'_ANTISPAM_GROUPSDSC','Usually set all blank.');
 define($constpref.'_ANTISPAM_CLASS','Class name of anti-SPAM');
 define($constpref.'_ANTISPAM_CLASSDSC','Default value is "default". If you disable anti-SPAM against guests even, set it blank');
+define($constpref.'_RSS_SHOW_HIDDEN','RSS Show hidden topics');
+define($constpref.'_RSS_SHOW_HIDDENDSC','Show hidden (comment integrated) topic title.');
+define($constpref.'_RSS_HIDDEN_TITLE','RSS Title of hidden topic');
+define($constpref.'_RSS_HIDDEN_TITLEDSC','Own title uses when empty value.');
 
 
 // Notify Categories

@@ -1,20 +1,12 @@
 <?php
 
-// RSS
-if( @$_GET['page'] == 'rss' ) {
-	$d3forum_output_rss = true ;
-	$GLOBALS['xoopsUser'] = false ;
-}
-
 include dirname(dirname(__FILE__)).'/include/common_prepend.php' ;
 
 // branches (TODO viewallforum)
 if( ! empty( $_GET['post_id'] ) ) {
 	include dirname(dirname(__FILE__)).'/include/viewpost.php' ;
-	$d3forum_output_rss = false ;
 } else if( ! empty( $_GET['topic_id'] ) ) {
 	include dirname(dirname(__FILE__)).'/include/listposts.php' ;
-	$d3forum_output_rss = false ;
 } else if( ! empty( $_GET['forum_id'] ) ) {
 	include dirname(dirname(__FILE__)).'/include/listtopics.php' ;
 } else if( ! empty( $_GET['cat_id'] ) ) {
@@ -23,7 +15,6 @@ if( ! empty( $_GET['post_id'] ) ) {
 	include dirname(dirname(__FILE__)).'/include/listtopics_over_categories.php' ;
 } else {
 	include dirname(dirname(__FILE__)).'/include/listcategories.php' ;
-	$d3forum_output_rss = false ;
 }
 
 
@@ -52,39 +43,19 @@ $xoopsTpl->assign(
 	)
 ) ;
 
-if( ! empty( $d3forum_output_rss ) ) {
-	// RSS 2.0
-	if( function_exists( 'mb_http_output' ) ) mb_http_output( 'pass' ) ;
+// display
 
-	$data = $xoopsTpl->get_template_vars() ;
-	if( _CHARSET != 'UTF-8' ) {
-		d3forum_common_utf8_encode_recursive( $data ) ;
+// For XCL 2.2 Call addMeta //nao-pon
+if ($d3forum_meta_description) {
+	if (defined('LEGACY_MODULE_VERSION') && version_compare(LEGACY_MODULE_VERSION, '2.2', '>=')) {
+		$xclRoot =& XCube_Root::getSingleton();
+		$headerScript = $xclRoot->mContext->getAttribute('headerScript');
+		$headerScript->addMeta('description', $d3forum_meta_description);
+	} elseif (isset($xoTheme) && is_object($xoTheme)) {
+		$xoTheme->addMeta('meta', 'description', $d3forum_meta_description);
 	}
-		$xoopsTpl->assign( $data ) ;
-	if( empty( $_GET['forum_id'] ) ) {
-		$rss = array( 'title' => $data['pagetitle'] , 'query' => 'cat_ids='.$data['cat_ids'] , 'desc' => '' , 'category_title' => '' ) ;
-	} else {
-		$rss = array( 'title' => $data['forum']['title'] , 'query' => 'forum_id='.$data['forum']['id'] , 'desc' => $data['forum']['desc'] , 'category_title' => $data['category']['title'] ) ;
-	}
-	$xoopsTpl->assign( 'rss' , $rss ) ;
-	header( 'Content-Type:text/xml; charset=utf-8' ) ;
-	$xoopsTpl->display( 'db:'.$mydirname.'_independent_rss20_listtopics.html' ) ;
-	exit ;
-} else {
-	// display
-
-	// For XCL 2.2 Call addMeta //nao-pon
-	if ($d3forum_meta_description) {
-		if (defined('LEGACY_MODULE_VERSION') && version_compare(LEGACY_MODULE_VERSION, '2.2', '>=')) {
-			$xclRoot =& XCube_Root::getSingleton();
-			$headerScript = $xclRoot->mContext->getAttribute('headerScript');
-			$headerScript->addMeta('description', $d3forum_meta_description);
-		} elseif (isset($xoTheme) && is_object($xoTheme)) {
-			$xoTheme->addMeta('meta', 'description', $d3forum_meta_description);
-		}
-	}
-
-	include XOOPS_ROOT_PATH.'/footer.php';
 }
+
+include XOOPS_ROOT_PATH.'/footer.php';
 
 ?>

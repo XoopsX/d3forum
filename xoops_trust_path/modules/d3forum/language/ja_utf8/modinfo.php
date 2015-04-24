@@ -80,6 +80,10 @@ define($constpref.'_ANTISPAM_GROUPS','SPAM投稿チェックを行うグルー�
 define($constpref.'_ANTISPAM_GROUPSDSC','通常は全て未選択です。SPAM投稿チェックを行うべきグループがある場合のみ選択してください。');
 define($constpref.'_ANTISPAM_CLASS','SPAM投稿チェック用クラス');
 define($constpref.'_ANTISPAM_CLASSDSC','デフォルトは default です。ゲストについてもSPAM投稿チェックを行わない場合はここを空欄にします。');
+define($constpref.'_RSS_SHOW_HIDDEN','RSS 閲覧制限トピックの表示');
+define($constpref.'_RSS_SHOW_HIDDENDSC','コメント統合元記事に閲覧制限があるトピックも本文と概要を除き RSS に出力します。');
+define($constpref.'_RSS_HIDDEN_TITLE','RSS 閲覧制限トピックタイトル');
+define($constpref.'_RSS_HIDDEN_TITLEDSC','RSS に閲覧制限のあるトピックも含める場合の固定タイトル文字。空欄の場合は、記事のタイトルがそのまま表示されます。');
 
 
 // Notify Categories

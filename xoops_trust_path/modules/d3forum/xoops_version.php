@@ -357,7 +357,25 @@ $modversion['config'][] = array(
 	'options'		=> array()
 ) ;
 
+$modversion['config'][] = array(
+	'name'			=> 'rss_show_hidden' ,
+	'title'			=> $constpref.'_RSS_SHOW_HIDDEN' ,
+	'description'	=> $constpref.'_RSS_SHOW_HIDDENDSC' ,
+	'formtype'		=> 'yesno' ,
+	'valuetype'		=> 'int' ,
+	'default'		=> 0 ,
+	'options'		=> array()
+) ;
 
+$modversion['config'][] = array(
+	'name'			=> 'rss_hidden_title' ,
+	'title'			=> $constpref.'_RSS_HIDDEN_TITLE' ,
+	'description'	=> $constpref.'_RSS_HIDDEN_TITLEDSC' ,
+	'formtype'		=> 'textbox' ,
+	'valuetype'		=> 'text' ,
+	'default'		=> '',
+	'options'		=> array()
+) ;
 
 // Notification
 $modversion['hasNotification'] = 1;

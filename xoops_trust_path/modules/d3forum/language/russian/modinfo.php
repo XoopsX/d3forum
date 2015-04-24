@@ -10,6 +10,17 @@ if( defined( 'FOR_XOOPS_LANG_CHECKER' ) || ! defined( $constpref.'_LOADED' ) ) {
 
 
 
+
+// Appended by Xoops Language Checker -GIJOE- in 2015-04-24 14:09:47
+define($constpref.'_USENAME','display name');
+define($constpref.'_USENAMEDESC','which name to use display name \'uname\'(user ID) or \'name\'(Real name). <br /> xoops default is \'uname\'(user ID)');
+define($constpref.'_USENAME_UNAME','use\'uname\'(user ID)');
+define($constpref.'_USENAME_NAME','use\'name\'(Real name)');
+define($constpref.'_RSS_SHOW_HIDDEN','RSS Show hidden topics');
+define($constpref.'_RSS_SHOW_HIDDENDSC','Show hidden (comment integrated) topic title.');
+define($constpref.'_RSS_HIDDEN_TITLE','RSS Title of hidden topic');
+define($constpref.'_RSS_HIDDEN_TITLEDSC','Own title uses when empty value.');
+
 // Appended by Xoops Language Checker -GIJOE- in 2007-09-28 15:55:31
 define($constpref.'_DEFAULT_OPTIONS','Default checked in post form');
 define($constpref.'_DEFAULT_OPTIONSDSC','List checked options separated by comma(,).<br />eg) smiley,xcode,br,number_entity<br />You can add these options: special_entity html attachsig u2t_marked');

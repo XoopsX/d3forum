@@ -5,6 +5,17 @@ $constpref = '_MI_' . strtoupper( $mydirname ) ;
 
 if( defined( 'FOR_XOOPS_LANG_CHECKER' ) || ! defined( $constpref.'_LOADED' ) ) {
 
+
+// Appended by Xoops Language Checker -GIJOE- in 2015-04-24 14:09:41
+define($constpref.'_USENAME','display name');
+define($constpref.'_USENAMEDESC','which name to use display name \'uname\'(user ID) or \'name\'(Real name). <br /> xoops default is \'uname\'(user ID)');
+define($constpref.'_USENAME_UNAME','use\'uname\'(user ID)');
+define($constpref.'_USENAME_NAME','use\'name\'(Real name)');
+define($constpref.'_RSS_SHOW_HIDDEN','RSS Show hidden topics');
+define($constpref.'_RSS_SHOW_HIDDENDSC','Show hidden (comment integrated) topic title.');
+define($constpref.'_RSS_HIDDEN_TITLE','RSS Title of hidden topic');
+define($constpref.'_RSS_HIDDEN_TITLEDSC','Own title uses when empty value.');
+
 define( $constpref.'_LOADED' , 1 ) ;
 
 // The name of this module
