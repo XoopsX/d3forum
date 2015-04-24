@@ -99,6 +99,12 @@ if (!isset($outputs['data'])) {
 	}
 }
 
+if (!isset($xoopsTpl)) {
+	// make XoopsTpl
+	require_once XOOPS_ROOT_PATH.'/class/template.php' ;
+	$xoopsTpl = new XoopsTpl() ;
+}
+
 $xoopsTpl->assign( $outputs );
 
 // RSS Build
@@ -113,5 +119,3 @@ ini_set('default_encoding', $encoding);
 header('Content-type: application/xml; charset="'.$encoding.'"');
 echo $out;
 exit();
-
-?>

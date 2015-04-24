@@ -23,10 +23,11 @@ if( is_object( $xoopsUser ) ) {
 	$xoops_isadmin = false ;
 }
 
-
-require_once XOOPS_ROOT_PATH.'/class/template.php' ;
-$tpl = new XoopsTpl() ;
-$tpl->assign( array(
+if (!isset($xoopsTpl)) {
+	require_once XOOPS_ROOT_PATH.'/class/template.php' ;
+	$xoopsTpl = new XoopsTpl() ;
+}
+$xoopsTpl->assign( array(
 	'mydirname' => $mydirname ,
 	'mod_url' => XOOPS_URL.'/modules/'.$mydirname ,
 	'xoops_config' => $xoopsConfig ,
@@ -39,7 +40,5 @@ $tpl->assign( array(
 	'xoops_uname' => $xoops_uname ,
 	'xoops_isadmin' => $xoops_isadmin ,
 ) ) ;
-$tpl->display( 'db:'.$mydirname.'_main.css' ) ;
+$xoopsTpl->display( 'db:'.$mydirname.'_main.css' ) ;
 exit ;
-
-?>
