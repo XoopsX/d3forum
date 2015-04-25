@@ -58,20 +58,27 @@ if (file_exists($c_file) && (filemtime($c_file) + $cache_min * 60) > time()) {
 if (!isset($outputs['data'])) {
 	$data =  d3forum_get_rssdata ( $mydirname , 15 , 0 , $forum , $cat_ids );
 	$b_time = time();
+	$cat_title = '';
+	$forum_title = '';
 
-	if (sizeof($cat_ids) > 1) {
-		$_titles = array();
-		foreach($data as $item) {
-			$_titles[] = $item['cat_title'];
+	if ($data) {
+		if (sizeof($cat_ids) > 1) {
+			$_titles = array();
+			foreach($data as $item) {
+				$_titles[] = $item['cat_title'];
+			}
+			$cat_title = join(', ', array_unique($_titles));
+		} else {
+			$cat_title = $data[0]['cat_title'];
 		}
-		$cat_title = join(', ', array_unique($_titles));
-	} else {
-		$cat_title = $data[0]['cat_title'];
+		if ($forum) {
+			$forum_title = $data[0]['forum_title'];
+		}
 	}
 
 	$title = htmlspecialchars($xoopsConfig['sitename']). ' - ' . htmlspecialchars($xoopsModule->getVar('name'));
-	if ($cat || $forum) $title .= ' - ' . htmlspecialchars($cat_title) ;
-	if ($forum) $title .= ' - [ ' . htmlspecialchars($data[0]['forum_title']) . ' ]';
+	if ($cat_title && ($cat || $forum)) $title .= ' - ' . htmlspecialchars($cat_title, ENT_COMPAT, _CHARSET) ;
+	if ($forum_title) $title .= ' - [ ' . htmlspecialchars($forum_title, ENT_COMPAT, _CHARSET) . ' ]';
 	$top_link = ($forum)? 'index.php?forum_id='.$forum : '';
 	$top_link = ($cat)? 'index.php?cat_id='.$cat : $top_link;
 	$top_link = XOOPS_URL.'/modules/'.$mydirname.'/'.$top_link;

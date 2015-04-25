@@ -44,6 +44,7 @@ function d3forum_get_rssdata ($mydirname, $limit=0, $offset=0, $forum_id=0, $cat
 	$sql = 'SELECT c.cat_title, f.forum_id, f.forum_title, p.post_id, p.topic_id, p.post_time, p.uid, p.subject, p.html, p.smiley, p.xcode, p.br, p.guest_name, t.topic_views, t.topic_posts_count, p.post_text, f.forum_external_link_format, t.topic_external_link_id FROM '.$db->prefix($mydirname.'_posts').' p LEFT JOIN '.$db->prefix($mydirname.'_topics').' t ON t.topic_id=p.topic_id LEFT JOIN '.$db->prefix($mydirname.'_forums').' f ON f.forum_id=t.forum_id LEFT JOIN '.$db->prefix($mydirname.'_categories').' c ON c.cat_id=f.cat_id WHERE ('.$whr_forum.') AND ! topic_invisible'.$last_post.$forum_id.$cat_id.' ORDER BY p.post_time DESC' ;
 	
 	$result = $db->query( $sql , $limit , $offset ) ;
+	$ret = array();
 	while ($row = $db->fetchArray($result)) 
 	{
 		$is_readable = true;
