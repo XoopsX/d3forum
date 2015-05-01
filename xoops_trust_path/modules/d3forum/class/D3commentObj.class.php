@@ -42,7 +42,7 @@ public function __construct ($params )
 			$params['external_dirname'] , $params['external_trustdirname'] ) ;
 }
 
-function & getInstance( $params )
+public static function & getInstance( $params )
 {
 	$external_dirname = $params['external_dirname'] ;
 
