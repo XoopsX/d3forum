@@ -147,7 +147,7 @@ function b_d3forum_list_topics_show( $options )
 		// d3comment object
 		$temp_forum_id = intval($forum_row['forum_id']);
 		if( ! empty( $forum_row['forum_external_link_format'] ) ) {
-			$d3com[$temp_forum_id] = &d3forum_b_get_comment_object( $mydirname , $forum_row['forum_external_link_format'] ) ;
+			$d3com[$temp_forum_id] = d3forum_b_get_comment_object( $mydirname , $forum_row['forum_external_link_format'] , $temp_forum_id ) ;
 		} else {
 			$d3com[$temp_forum_id] = false ;
 		}
@@ -449,7 +449,7 @@ function b_d3forum_list_posts_show( $options )
 		// d3comment object
 		$temp_forum_id = intval($forum_row['forum_id']);
 		if( ! empty( $forum_row['forum_external_link_format'] ) ) {
-			$d3com[$temp_forum_id] = &d3forum_b_get_comment_object( $mydirname , $forum_row['forum_external_link_format'] ) ;
+			$d3com[$temp_forum_id] = d3forum_b_get_comment_object( $mydirname , $forum_row['forum_external_link_format'] , $temp_forum_id ) ;
 		} else {
 			$d3com[$temp_forum_id] = false ;
 		}
@@ -650,12 +650,15 @@ function b_d3forum_check_limits( $var )
 
 // get object for comment integration
 if (! function_exists ("d3forum_b_get_comment_object")) {
-   function &d3forum_b_get_comment_object( $mydirname , $external_link_format )
+   function d3forum_b_get_comment_object( $mydirname , $external_link_format , $forum_id = null )
    {
 	include_once dirname(dirname(__FILE__)).'/class/D3commentAbstract.class.php' ;
 	@list( $external_dirname , $classname , $external_trustdirname ) = explode( '::' , $external_link_format ) ;
 	if( empty( $classname ) ) {
 		$obj = new D3commentAbstract( $mydirname , '' ) ;
+		if (!empty($forum_id)) {
+			$obj->setForumId($forum_id);
+		}
 		return $obj ;
 	}
 
@@ -676,10 +679,16 @@ if (! function_exists ("d3forum_b_get_comment_object")) {
 	// check the class
 	if( ! $classname || ! class_exists( $classname ) ) {
 		$obj = new D3commentAbstract( $mydirname , $external_dirname ) ;
+		if (!empty($forum_id)) {
+			$obj->setForumId($forum_id);
+		}
 		return $obj ;
 	}
 
 	$obj = new $classname( $mydirname , $external_dirname , $external_trustdirname ) ;
+	if (!empty($forum_id)) {
+		$obj->setForumId($forum_id);
+	}
 	return $obj ;
    }
 }

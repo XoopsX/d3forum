@@ -32,7 +32,7 @@ function d3forum_global_search_base( $mydirname , $keywords , $andor , $limit , 
 		// d3comment object
 		$temp_forum_id = intval($forum_row['forum_id']);
 		if( ! empty( $forum_row['forum_external_link_format'] ) ) {
-			$d3com[$temp_forum_id] =& d3forum_main_get_comment_object( $mydirname , $forum_row['forum_external_link_format'] ) ;
+			$d3com[$temp_forum_id] = d3forum_main_get_comment_object( $mydirname , $forum_row['forum_external_link_format'] , $temp_forum_id ) ;
 		} else {
 			$d3com[$temp_forum_id] = false ;
 		}

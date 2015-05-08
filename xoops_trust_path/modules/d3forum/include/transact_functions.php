@@ -12,7 +12,7 @@ function d3forum_main_d3comment_callback( $mydirname , $topic_id , $mode = 'upda
 	list( $external_link_format , $external_link_id , $forum_id ) = $db->fetchRow( $db->query( "SELECT f.forum_external_link_format,t.topic_external_link_id,t.forum_id FROM ".$db->prefix($mydirname."_topics")." t LEFT JOIN ".$db->prefix($mydirname."_forums")." f ON f.forum_id=t.forum_id WHERE topic_id=$topic_id" ) ) ;
 
 	if( ! empty( $external_link_format ) && ! empty( $external_link_id ) ) {
-		$d3com =& d3forum_main_get_comment_object( $mydirname , $external_link_format ) ;
+		$d3com = d3forum_main_get_comment_object( $mydirname , $external_link_format , $forum_id ) ;
 		if( is_object( @$d3com ) ) {
 			$d3com->onUpdate( $mode , $external_link_id , $forum_id , $topic_id , $post_id ) ;
 		}
@@ -472,7 +472,7 @@ function d3forum_update_topic_from_post( $mydirname , $topic_id , $forum_id , $f
 
 	// call back to the target of comment
 	if( ! empty( $external_link_format ) && ! empty( $external_link_id ) ) {
-		$d3com =& d3forum_main_get_comment_object( $mydirname , $external_link_format ) ;
+		$d3com = d3forum_main_get_comment_object( $mydirname , $external_link_format , $forum_id ) ;
 		if( is_object( @$d3com ) ) {
 			$d3com->onUpdate( 'update' , $external_link_id , $forum_id , $topic_id ) ;
 		}

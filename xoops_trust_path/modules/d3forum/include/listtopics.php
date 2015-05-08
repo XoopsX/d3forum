@@ -45,7 +45,7 @@ if( ! $trs = $db->query( $sql ) ) die( _MD_D3FORUM_ERR_SQL.__LINE__ ) ;
 
 	// naao
 	// d3comment object
-	if( ! empty( $forum_row['forum_external_link_format'] ) ) $d3com =& d3forum_main_get_comment_object( $mydirname , $forum_row['forum_external_link_format'] ) ;
+	if( ! empty( $forum_row['forum_external_link_format'] ) ) $d3com = d3forum_main_get_comment_object( $mydirname , $forum_row['forum_external_link_format'] , $forum_id ) ;
 	else $d3com = false ;
 
 // topics loop
@@ -160,7 +160,7 @@ $xoopsTpl->assign(
 ) ;
 
 // TODO
-// ¥Ú¡¼¥¸Ê¬³ä½èÍý
-// u2t_marked ¤ò¥½¡¼¥È½ç¤Ë´Þ¤á¤ë
+// ï¿½Ú¡ï¿½ï¿½ï¿½Ê¬ï¿½ï¿½ï¿½ï¿½ï¿½
+// u2t_marked ï¿½ò¥½¡ï¿½ï¿½È½ï¿½Ë´Þ¤ï¿½ï¿½
 
 ?>

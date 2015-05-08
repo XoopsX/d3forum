@@ -11,7 +11,7 @@
 		$whr_external_link_id = "t.topic_external_link_id='$external_link_id4sql'" ;
 		$d3comment_info = array(
 			'comment_link' => d3forum_get_comment_link( $forum_row['forum_external_link_format'] , $external_link_id ) ,
-			'comment_description' => d3forum_get_comment_description( $mydirname , $forum_row['forum_external_link_format'] , $external_link_id ) ,
+			'comment_description' => d3forum_get_comment_description( $mydirname , $forum_row['forum_external_link_format'] , $external_link_id , isset($forum_id)? $forum_id : null ) ,
 		) ;
 		if( is_array( $d3comment_info['comment_description'] ) ) {
 			$xoops_breadcrumbs[] = array(

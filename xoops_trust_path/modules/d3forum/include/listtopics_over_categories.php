@@ -41,7 +41,7 @@ $d3com = array() ;
 while( $forum_row = $db->fetchArray( $frs ) ) {
 	// d3comment object
 	$temp_forum_id = intval($forum_row['forum_id']);
-	if( ! empty( $forum_row['forum_external_link_format'] ) ) $d3com[$temp_forum_id] =& d3forum_main_get_comment_object( $mydirname , $forum_row['forum_external_link_format'] ) ;
+	if( ! empty( $forum_row['forum_external_link_format'] ) ) $d3com[$temp_forum_id] = d3forum_main_get_comment_object( $mydirname , $forum_row['forum_external_link_format'], $temp_forum_id ) ;
 	else $d3com[$temp_forum_id] = false ;
 }
 
@@ -122,7 +122,7 @@ while( $topic_row = $db->fetchArray( $trs ) ) {
 	if( is_object( $d3com[intval($topic_row['forum_id'])]) ) {
 		$d3com_obj = $d3com[intval($topic_row['forum_id'])];
 		$external_link_id = intval($topic_row['topic_external_link_id']);
-		if( ( $external_link_id = $d3com_obj->validate_id( $external_link_id ) ) === false && ! $isadminormod ) {
+		if( ( $external_link_id = $d3com_obj->validate_id( $external_link_id ) ) === false && ! $isadminorcatmod ) {
 			$can_display = false;
 		}
 	}	// naao to

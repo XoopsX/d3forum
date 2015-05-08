@@ -13,6 +13,7 @@ var $module = null ;
 var $mytrustdirname = '' ;
 var $mod_config = array() ;
 var $smarty = null ;
+protected $forum_id = null; // for block function etc
 
 public function __construct( $d3forum_dirname , $target_dirname , $target_trustdirname = '' )
 {
@@ -40,6 +41,9 @@ function setSmarty( &$smarty )
 	$this->smarty =& $smarty ;
 }
 
+public function setForumId($id) {
+	$this->forum_id = intval($id);
+}
 
 // abstract (override it)
 // set d3forum_dirname from parameter or config
@@ -54,12 +58,13 @@ function setD3forumDirname( $d3forum_dirname = '' )
 	}
 }
 
-
 // get forum_id from $params or config
 // override it if necessary
 function getForumId( $params )
 {
-	if( ! empty( $params['forum_id'] ) ) {
+	if( $this->forum_id ) {
+		return $this->forum_id;
+	} else if( ! empty( $params['forum_id'] ) ) {
 		return intval( $params['forum_id'] ) ;
 	} else if( ! empty( $this->mod_config['comment_forum_id'] ) ) {
 		return $this->mod_config['comment_forum_id'] ;

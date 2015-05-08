@@ -306,9 +306,9 @@ function d3forum_get_comment_link( $external_link_format , $external_link_id )
 
 
 // started from class:: for native d3comment modules
-function d3forum_get_comment_description( $mydirname , $external_link_format , $external_link_id )
+function d3forum_get_comment_description( $mydirname , $external_link_format , $external_link_id , $forum_id = null)
 {
-	$d3com =& d3forum_main_get_comment_object( $mydirname , $external_link_format ) ;
+	$d3com = d3forum_main_get_comment_object( $mydirname , $external_link_format , $forum_id ) ;
 	if( ! is_object( $d3com ) ) return '' ;
 
 	$description = $d3com->fetchDescription( $external_link_id ) ;
@@ -318,7 +318,7 @@ function d3forum_get_comment_description( $mydirname , $external_link_format , $
 }
 
 // get object for comment integration  // naao modified
-function &d3forum_main_get_comment_object( $forum_dirname, $external_link_format )
+function d3forum_main_get_comment_object( $forum_dirname, $external_link_format, $forum_id = null )
 {
 	require_once dirname(dirname(__FILE__)).'/class/D3commentObj.class.php' ;
 
@@ -327,7 +327,10 @@ function &d3forum_main_get_comment_object( $forum_dirname, $external_link_format
 	@list( $params['external_dirname'] , $params['classname'] , $params['external_trustdirname'] ) 
 		= explode( '::' , $external_link_format ) ;
 
-	$obj =& D3commentObj::getInstance ( $params ) ;
+	$obj = D3commentObj::getInstance ( $params ) ;
+	if (!empty($forum_id)) {
+		$obj->d3comObj->setForumId($forum_id);
+	}
 	return $obj->d3comObj;
 }
 

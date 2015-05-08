@@ -45,12 +45,15 @@ function d3forum_get_rssdata ($mydirname, $limit=0, $offset=0, $forum_id=0, $cat
 	
 	$result = $db->query( $sql , $limit , $offset ) ;
 	$ret = array();
+	$d3coms = array();
 	while ($row = $db->fetchArray($result)) 
 	{
 		$is_readable = true;
 		if (! empty($row['forum_external_link_format'])) {
 			require_once dirname(__FILE__).'/main_functions.php' ;
-			$d3com =& d3forum_main_get_comment_object( $mydirname , $row['forum_external_link_format']);
+			if (!isset($d3coms[$row['forum_id']])) {
+				$d3com = $d3coms[$row['forum_id']] = d3forum_main_get_comment_object( $mydirname , $row['forum_external_link_format'] , $row['forum_id']);
+			}
 			$is_readable = $d3com->validate_id($row['topic_external_link_id']);
 		}
 		

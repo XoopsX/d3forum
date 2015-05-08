@@ -32,7 +32,7 @@ $forum4assign = array(
 // assign link or free description (by class) as comment
 if( ! empty( $external_link_id ) ) {
 	$topic4assign['comment_link'] = d3forum_get_comment_link( $forum_row['forum_external_link_format'] , $external_link_id ) ;
-	$topic4assign['comment_description'] = d3forum_get_comment_description( $mydirname , $forum_row['forum_external_link_format'] , $external_link_id ) ;
+	$topic4assign['comment_description'] = d3forum_get_comment_description( $mydirname , $forum_row['forum_external_link_format'] , $external_link_id , $forum_id ) ;
 }
 
 // assign breadcrumbs of this forum
