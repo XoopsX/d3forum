@@ -37,7 +37,11 @@ $reference_time = intval( $post_row['post_time'] ) ;
 if( ! empty( $post_row['guest_name'] ) ) {
 	$reference_name4html = htmlspecialchars( $post_row['guest_name'] , ENT_QUOTES ) ;
 } else if( $post_row['uid'] ) {
-	$reference_name4html = XoopsUser::getUnameFromId( $post_row['uid'] ) ;
+	$reference_name4html = XoopsUser::getUnameFromId( $post_row['uid'], $xoopsModuleConfig['use_name'] ) ;
+	if ($reference_name4html === '') {
+		// fall back to uname
+		$reference_name4html = XoopsUser::getUnameFromId( $post_row['uid'] ) ;
+	}
 } else {
 	$reference_name4html = $xoopsModuleConfig['anonymous_name'] ;
 }
