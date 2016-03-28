@@ -396,11 +396,13 @@ if( ! empty( $_POST['contents_preview'] ) ) {
 
 	// If user checked notification box, subscribe them to the
 	// appropriate event; if unchecked, then unsubscribe
-	if( ! empty( $xoopsUser ) && ! empty( $xoopsModuleConfig['notification_enabled']) && in_array( 'topic-newpost' , @$xoopsModuleConfig['notification_events'] ) ) {
-		if (!empty($_POST['notify'])) {
-			$notification_handler->subscribe( 'topic', $topic_id , 'newpost' ) ;
-		} else {
-			$notification_handler->unsubscribe( 'topic', $topic_id , 'newpost' ) ;
+	if ( isset( $_POST['notify'] ) ) {
+		if( ! empty( $xoopsUser ) && ! empty( $xoopsModuleConfig['notification_enabled']) && in_array( 'topic-newpost' , @$xoopsModuleConfig['notification_events'] ) ) {
+			if (!empty($_POST['notify'])) {
+				$notification_handler->subscribe( 'topic', $topic_id , 'newpost' ) ;
+			} else {
+				$notification_handler->unsubscribe( 'topic', $topic_id , 'newpost' ) ;
+			}
 		}
 	}
 
